@@ -1,5 +1,5 @@
 import { getTrnsIds } from '~/components/trns/getTrns'
-import { getTotal } from '~/components/amount/getTotal'
+import { getTotal, getAmountInRate } from '~/components/amount/getTotal'
 import type { WalletId } from '~~/components/wallets/types'
 
 export default {
@@ -17,6 +17,8 @@ export default {
 
     const walletsItems = rootState.wallets.items
     const trnsItems = rootState.trns.items
+    const baseCurrencyCode = rootState.currencies.base
+    const rates = rootState.currencies.rates
 
     const getWalletTotal = (walletId: WalletId) => {
       const trnsIds = getTrnsIds({ trnsItems, walletsIds: [walletId] })
@@ -27,7 +29,14 @@ export default {
         walletsItems,
       })
 
-      return sumTransactions + sumTransfers
+      const wallet = walletsItems[walletId];
+      const openingBalance = getAmountInRate({
+        amount: wallet.openingBalance ?? 0,
+        baseCurrencyCode,
+        currencyCode: wallet.currency,
+        rates
+      })
+      return openingBalance + sumTransactions + sumTransfers
     }
 
     const walletsTotal = {}
