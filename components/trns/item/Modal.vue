@@ -3,12 +3,19 @@ import useFilter from '~/components/filter/useFilter'
 import useTrn from '~/components/trns/item/useTrn'
 import { useTrnForm } from '~/components/trnForm/useTrnForm'
 
+function getExtension(uri) {
+  const filename = new URL(uri).pathname
+  return filename.slice((filename.split('?')[0].lastIndexOf(".") - 1 >>> 0) + 2)
+}
+
 // TODO: useFilter
 export default {
   setup() {
     const { $store } = useNuxtApp()
     const { trnFormEdit, trnFormDuplicate } = useTrnForm()
     const { setFilterCatsId, setFilterWalletsId } = useFilter()
+
+    const router = useRouter()
 
     const closed = () => {
       $store.commit('trns/hideTrnModal')
@@ -46,6 +53,10 @@ export default {
 
     wallet() {
       return this.$store.state.wallets.items[this.$store.state.trns.items[this.trnId].walletId]
+    },
+
+    blob() {
+      return this.trnItem.noteUri
     },
   },
 
@@ -97,6 +108,28 @@ export default {
       this.$store.commit('trns/hideTrnModal')
       this.$store.commit('trns/setTrnModalId', null)
     },
+
+    handleNewRuleClick() {
+      const trn = this.trnItem
+      this.$store.commit('rules/setNewRuleFromTrn', trn)
+      this.$store.commit('trns/hideTrnModal')
+      this.$store.commit('trns/setTrnModalId', null)
+      this.router.push('/rules/new')
+    },
+
+    handleShowNote() {
+      const uri = this.trnItem.noteUri
+
+      // If not an image (e.g. a pdf), just open the link in an external window
+      // NAD: For the moment we'll always do this, because we need to activate cors first (see: useTrn.formatTrnItem)
+      //if (!["jfif","jpe","jpeg","jpg","png"].includes(getExtension(uri))) {
+        window.open(uri, '_blank')
+      //  return
+      //}
+
+      // Otherwise, show inline!
+      //this.$store.commit('trns/showTrnNoteModal', uri)
+    }
   },
 }
 </script>
@@ -142,9 +175,17 @@ Portal(
             )
 
             ModalButton(
+              v-if="false"
               :name="$t('base.duplicate')"
               icon="mdi mdi-content-copy"
               @onClick="handleDuplicateTrn"
+            )
+
+            ModalButton(
+              v-if="true"
+              :name="$t('rules.new')"
+              icon="mdi mdi-playlist-plus"
+              @onClick="handleNewRuleClick"
             )
 
             ModalButton(
@@ -168,6 +209,13 @@ Portal(
                   :abbr="wallet.name"
                   :background="wallet.color"
                 )
+
+            ModalButton(
+              v-if="blob"
+              :name="$t('trnForm.note.title')"
+              icon="mdi mdi-receipt-text-outline"
+              @onClick="handleShowNote"
+            )
 
         .pt-4.px-4.flex-center
           .cursor-pointer.grow.py-3.px-5.flex-center.rounded-full.text-sm.bg-item-main-bg.hocus_bg-item-main-hover(

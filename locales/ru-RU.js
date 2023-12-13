@@ -87,6 +87,7 @@ export default {
     edit: 'Редактировать',
     delete: 'Удалить',
     filter: 'Фильтр',
+    data: 'Данные',
   },
 
   filter: {
@@ -188,9 +189,6 @@ export default {
       },
       icon: {
         label: 'Иконка',
-      },
-      data: {
-        label: 'Данные',
       },
       lastUsed: 'Показывать в списке недавних категорий',
       quickSelector: 'Любимая категория',

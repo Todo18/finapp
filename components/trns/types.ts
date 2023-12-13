@@ -24,6 +24,7 @@ interface BaseTrn {
   date: number
   desc?: string
   edited: number
+  noteBlob?: Blob
 }
 
 export interface Transaction extends BaseTrn {

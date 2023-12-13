@@ -12,7 +12,7 @@ export default {
         case 'ru':
           return '🇷🇺 Русский - Russian'
         default:
-          return '🇺🇸 English - Английский'
+          return '🇺🇸 English'
       }
     },
   },
@@ -44,13 +44,13 @@ SharedContextMenu(
     )
 
   template(slot="content")
-    SharedContextMenuItem(
-      title="🇷🇺 Русский - Russian"
-      @onClick="changeLang('ru')"
-    )
+    //SharedContextMenuItem(
+    //  title="🇷🇺 Русский - Russian"
+    //  @onClick="changeLang('ru')"
+    //)
 
     SharedContextMenuItem(
-      title="🇺🇸 English - Английский"
+      title="🇺🇸 English"
       @onClick="changeLang('en')"
     )
 </template>

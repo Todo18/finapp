@@ -90,7 +90,7 @@ div(v-if="walletForm")
       UiTabsItem(
         :isActive="activeTab === 'data'"
         @click="activeTab = 'data'"
-      ) {{ $t('categories.form.data.label') }}
+      ) {{ $t('base.data') }}
 
       UiTabsItem(
         :isActive="activeTab === 'currencies'"
@@ -126,6 +126,24 @@ div(v-if="walletForm")
           @input="event => emit('updateValue', 'description', event.target.value)"
         )
 
+      .mb-4
+        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('wallets.form.accountNumber.label') }}
+        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none(
+          :placeholder="$t('wallets.form.accountNumber.placeholder')"
+          :value="walletForm.accountNumber"
+          type="text"
+          @input="event => emit('updateValue', 'accountNumber', event.target.value.replace(/[ .]/g, ''))"
+        )
+
+      .mb-4
+        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('wallets.form.openingBalance.label') }}
+        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none(
+          :placeholder="$t('wallets.form.openingBalance.placeholder')"
+          :value="walletForm.openingBalance"
+          type="number"
+          @input="event => emit('updateValue', 'openingBalance', event.target.value)"
+        )
+        
       SharedContextMenuItem(
         :checkboxValue="walletForm.countTotal"
         :title="$t('wallets.form.total.placeholder')"

@@ -48,6 +48,20 @@ export default {
       to: 'To',
       toLong: 'To wallet',
     },
+    note: {
+      title: 'View receipt'
+    }
+  },
+
+  codaForm: {
+    form: {
+      import: 'Import',
+      files: {
+        label: 'CODA file(s)'
+      }
+    },
+    import: 'Import',
+    title: 'Import CODA file',
   },
 
   app: {
@@ -57,7 +71,7 @@ export default {
     lang: {
       select: 'Choose language',
       en: 'English',
-      ru: 'Русский',
+      //ru: 'Русский',
     },
     theme: {
       select: 'Choose style',
@@ -67,7 +81,10 @@ export default {
   },
 
   userLogout: 'Logout',
+  loginWithEmailAndPassword: 'Login',
   loginWithGoogle: 'Login with Google',
+  email: 'Email',
+  password: 'Password',
   changeTheme: 'Change theme',
 
   base: {
@@ -86,6 +103,7 @@ export default {
     edit: 'Edit',
     delete: 'Delete',
     filter: 'Filter',
+    data: 'Data',
   },
 
   filter: {
@@ -131,7 +149,18 @@ export default {
         label: 'Wallet name',
         placeholder: 'Write...',
         error: 'Write wallet name',
-        exist: 'Wallet with same name is exist',
+        exist: 'Wallet with same name already exists',
+      },
+      accountNumber: {
+        label: 'Account number',
+        placeholder: 'Write...',
+        error: 'Write account number',
+        exist: 'Wallet with same number already exists',
+      },
+      openingBalance: {
+        label: 'Opening balance',
+        placeholder: 'Write...',
+        error: 'Enter opening balance',
       },
       description: {
         label: 'Wallet description (optional)',
@@ -188,14 +217,40 @@ export default {
       icon: {
         label: 'Icon',
       },
-      data: {
-        label: 'Data',
-      },
       lastUsed: 'Show in last used categories',
       quickSelector: 'Favorite category',
       childColor: 'Apply color to all child categories',
       save: 'Save',
     },
+  },
+
+  rules: {
+    title: 'Rules',
+    name: 'Rules',
+    shortTitle: 'Rules',
+    new: 'New rule',
+    allTitle: 'All',
+    createNewTitle: 'Create rule',
+    editTitle: 'Edit rule',
+    form: {
+      name: {
+        label: 'Rule name',
+        placeholder: 'Write rule name...',
+        error: 'Write rule name',
+        exist: 'Rule with same name already exists',
+      },
+      condition: {
+        label: 'Rule condition',
+        placeholder: 'Write conditional expression...',
+        error: 'Enter valid conditional expression',
+      },
+      category: {
+        no: 'Category',
+        label: 'Category',
+      },
+      save: 'Save',
+    },
+    deletedSuccess: 'Successfully deleted rule!',
   },
 
   stat: {

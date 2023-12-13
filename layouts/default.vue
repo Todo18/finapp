@@ -22,6 +22,7 @@ const keepAliveInclude = [
   'pages/categories/index.vue',
   'pages/dashboard.vue',
   'pages/wallets/index.vue',
+  'pages/coda.vue',
 ]
 
 // TODO: Put in one separate setup function

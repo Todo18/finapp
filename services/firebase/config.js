@@ -1,9 +1,9 @@
 export const config = {
-  apiKey: 'AIzaSyAjJG6UrfA1FEzV8qbjmuk8wiUic0uWv-8',
-  authDomain: 'finapp-17474.firebaseapp.com',
-  databaseURL: 'https://finapp-17474.firebaseio.com',
-  projectId: 'finapp-17474',
-  storageBucket: 'finapp-17474.appspot.com',
-  messagingSenderId: '1057184379213',
-  appId: '1:1057184379213:web:8c728d0b7099f194',
+  apiKey: "AIzaSyBCSCearwVJ31XgtB0Md-AMugy_wlf6wYY",
+  authDomain: "coin-tracker-802c7.firebaseapp.com",
+  databaseURL: "https://coin-tracker-802c7.firebaseio.com",
+  projectId: "coin-tracker-802c7",
+  storageBucket: "coin-tracker-802c7.appspot.com",
+  messagingSenderId: "680288320163",
+  appId: "1:680288320163:web:292b2e0449dfcf3eff1d16"
 }

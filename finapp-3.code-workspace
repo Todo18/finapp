@@ -19,6 +19,9 @@
     {
       "name": "finapp",
       "path": "."
+    },
+    {
+      "path": "../coda"
     }
   ],
   "settings": {

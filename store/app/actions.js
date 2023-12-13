@@ -23,6 +23,9 @@ export default {
         dispatch('user/initUser', user, { root: true })
         dispatch('currencies/initCurrencies', null, { root: true })
         dispatch('categories/initCategories', null, { root: true })
+
+        // NAD: Init rules
+        dispatch('rules/initRules', null, { root: true })
         dispatch('wallets/initWallets', null, { root: true })
         dispatch('trns/initTrns', null, { root: true })
         dispatch('lang/initDbLang', null, { root: true })
@@ -44,11 +47,13 @@ export default {
     dispatch('ui/initUi', null, { root: true })
     dispatch('chart/initChart', null, { root: true })
 
-    const [activeTab, user, currencies, categories, wallets, trns, filterPeriod] = await Promise.all([
+    // NAD: Init rules from local store
+    const [activeTab, user, currencies, categories, rules, wallets, trns, filterPeriod] = await Promise.all([
       localforage.getItem('finapp.activeTab'),
       localforage.getItem('finapp.user'),
       localforage.getItem('finapp.currencies'),
       localforage.getItem('finapp.categories'),
+      localforage.getItem('finapp.rules'),
       localforage.getItem('finapp.wallets'),
       localforage.getItem('finapp.trns'),
       localforage.getItem('finapp.filter.period'),
@@ -62,6 +67,8 @@ export default {
       commit('currencies/setCurrencies', currencies, { root: true })
     if (categories)
       commit('categories/setCategories', categories, { root: true })
+    if (rules)
+      commit('rules/setRules', rules, { root: true })
     if (wallets)
       commit('wallets/setWallets', wallets, { root: true })
     if (trns)
@@ -86,6 +93,9 @@ export default {
     dispatch('ui/setActiveTab', 'stat', { root: true })
     await dispatch('user/setUser', null, { root: true })
     await dispatch('categories/setCategories', null, { root: true })
+
+    // NAD: Clear rules
+    await dispatch('rules/setRules', null, { root: true })
     await dispatch('wallets/setWallets', null, { root: true })
     await dispatch('trns/setTrns', null, { root: true })
     setTimeout(() => commit('setAppStatus', 'ready'), 100)

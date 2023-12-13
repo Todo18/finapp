@@ -45,7 +45,7 @@ export default defineNuxtConfig({
       href: 'https://fonts.googleapis.com/css?family=Roboto:400,500,600,700|Roboto+Condensed:400,500,600,700|Unica+One|Nunito:400,700,800&display=swap&subset=cyrillic',
     }, {
       rel: 'stylesheet',
-      href: 'https://cdn.materialdesignicons.com/5.9.55/css/materialdesignicons.min.css',
+      href: 'https://cdn.jsdelivr.net/npm/@mdi/font@7.1.96/css/materialdesignicons.min.css',
     }],
 
     noscript: [{ innerHTML: 'This website requires JavaScript.' }],
@@ -112,10 +112,6 @@ export default defineNuxtConfig({
       code: 'en',
       iso: 'en-US',
       file: 'en-US.js',
-    }, {
-      code: 'ru',
-      iso: 'ru-RU',
-      file: 'ru-RU.js',
     }],
     strategy: 'no_prefix',
     defaultLocale: 'en',
@@ -148,6 +144,9 @@ export default defineNuxtConfig({
         handler: 'cacheFirst',
       }, {
         urlPattern: 'https://cdn.materialdesignicons.com/',
+        handler: 'cacheFirst',
+      }, {
+        urlPattern: 'https://cdn.jsdelivr.net/',
         handler: 'cacheFirst',
       }],
     },

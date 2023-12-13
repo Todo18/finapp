@@ -92,7 +92,7 @@ export default {
     position absolute
     top 48px
     min-width 360px
-    background var(--c-bg-5)
+    background var(--c-bg-4) /* NAD: This was --c-bg-5, same color as :hover... */
     border 1px solid var(--c-bg-1)
     border-radius $m6
 

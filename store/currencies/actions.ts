@@ -8,7 +8,7 @@ export default {
     const uid = rootState.user.user.uid
 
     // User base currency in DB
-    const userBaseCurrency = await getDataOnce(`users/${uid}/settings/baseCurrency`) || 'USD'
+    const userBaseCurrency = await getDataOnce(`users/${uid}/settings/baseCurrency`) || 'EUR'
 
     // Rates for today
     const today = dayjs().startOf('day').valueOf()

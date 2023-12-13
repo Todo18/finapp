@@ -56,11 +56,13 @@ export interface WalletItemWithAmount extends WalletItem {
 }
 
 export interface WalletForm {
+  accountNumber: string
   color: string
   countTotal: boolean
   currency: string
   description?: string
   isCredit: boolean
   name: string
+  openingBalance: number
   order: number
 }

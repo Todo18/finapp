@@ -8,6 +8,9 @@
   //- Currencies
   CurrenciesModal
 
+  //- Trn Note
+  TrnsItemNoteModal
+
   //- Notifications
   Notifications(
     :max="2"

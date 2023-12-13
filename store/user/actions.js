@@ -21,6 +21,9 @@ export default {
 
   async signOut({ dispatch }) {
     await dispatch('categories/unsubscribeCategories', null, { root: true })
+
+    // NAD: Stop watching rules
+    await dispatch('rules/unsubscribeRules', null, { root: true })
     await dispatch('trns/unsubscribeTrns', null, { root: true })
     await dispatch('wallets/unsubscribeWallets', null, { root: true })
     await dispatch('app/clearUserData', null, { root: true })

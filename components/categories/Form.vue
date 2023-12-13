@@ -24,7 +24,7 @@ const isAllowChangeParent = computed(() =>
 
 const tabs = computed(() => [{
   id: 'data',
-  name: i18n.t('categories.form.data.label'),
+  name: i18n.t('base.data'),
 }, {
   id: 'parent',
   name: i18n.t('categories.form.parent.label'),
@@ -145,7 +145,7 @@ div
     //-----------------------------------
     template(v-if="activeTab === 'data'")
       .mb-4
-        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('wallets.form.name.label') }}
+        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('categories.form.name.label') }}
         input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none(
           :placeholder="$t('categories.form.name.placeholder')"
           :value="categoryForm.name"
@@ -206,7 +206,7 @@ div
               template(v-else-if="color")
                 .colorPreview(:style="{ background: color }")
 
-      .pb-2.text-sm.text-item-base-down {{ $t('wallets.form.colors.custom') }}
+      .pb-2.text-sm.text-item-base-down {{ $t('categories.form.colors.custom') }}
       input.cursor-pointer.w-full.h-12.p-0.border-0(v-model="categoryForm.color" type="color")
 
     //- Parent

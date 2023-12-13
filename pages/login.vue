@@ -1,15 +1,53 @@
 <script setup lang="ts">
-import { GoogleAuthProvider, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '~/services/firebase/api'
 
 const { $notify } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
 
+const email = ref("")
+const password = ref("")
+
 const isLoading = ref(false)
+const submitted = ref(false)
 
 if (route.query?.loading)
   isLoading.value = true
+
+function validateForm () {
+  // name
+  if (!this.email) {
+    this.$notify({
+      title: 'Login',
+      text: 'Enter email address'
+    })
+    return false
+  }
+
+  // password
+  if (!this.password) {
+    this.$notify({
+      title: 'Login',
+      text: 'Enter password'
+    })
+    return false
+  }
+
+  return true
+}
+
+function signInWithEmailAndPassword() {
+  if (!this.validateForm()) return
+
+  this.$router.push({ query: { loading: true } })
+  //this.error = null
+  this.isLoading = true
+  this.submitted = true
+
+  signInWithEmailAndPassword(auth, this.email, this.password)
+    .catch(e => this.notifyAboutError(e))
+}
 
 function signInWithGoogle() {
   router.push({ query: { loading: true } })
@@ -65,6 +103,31 @@ export default defineComponent({
       .px-3.py-8.flex.flex-col.items-center(
         class="min-w-[280px]"
       )
+        .inputText
+          input(
+            type="text"
+            v-bind:placeholder="$t('email')" 
+            v-model="email"
+            :class="{ 'is-invalid': submitted && !email }"
+          ).inputText__value
+
+        .inputText
+          input(
+            type="password"
+            v-bind:placeholder="$t('password')" 
+            v-model="password"
+            :class="{ 'is-invalid': submitted && !password }"
+          ).inputText__value
+
+        UiButtonBlue(
+          :disabled="isLoading"
+          @click="signInWithEmailAndPassword"
+        )
+          | {{ $t('loginWithEmailAndPassword') }}
+          transition(name="fadeIn")
+            .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
+              UiSpinier
+
         UiButtonBlue(
           :disabled="isLoading"
           @click="signInWithGoogle"

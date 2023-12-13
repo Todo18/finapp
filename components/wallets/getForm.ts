@@ -8,7 +8,9 @@ export function getPreparedFormData(values?: any): WalletForm {
     name: values?.name ?? '',
     isCredit: values?.isCredit ?? false,
     description: values?.description ?? null,
-    currency: values?.currency ?? 'USD',
+    currency: values?.currency ?? 'EUR',
+    accountNumber: values?.accountNumber ?? null,
+    openingBalance: Number(values?.openingBalance ?? 0),
     countTotal: values?.countTotal ?? true,
     color: values?.color ?? random(random(allColors)),
   }

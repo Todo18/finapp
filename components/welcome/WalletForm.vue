@@ -10,9 +10,11 @@ const { $store, nuxt2Context: { i18n } } = useNuxtApp()
 const walletForm = ref<WalletForm>({
   color: random(random(allColors)),
   countTotal: true,
-  currency: 'USD',
+  currency: 'EUR',
   isCredit: false,
   name: '',
+  accountNumber: null,
+  openingBalance: 0,
   order: 1,
 })
 

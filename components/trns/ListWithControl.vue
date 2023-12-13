@@ -34,7 +34,7 @@ const filteredTrnsIds = computed(() => {
   return trnsIds.filter(id => trnsItems[id].type === filterTrnsType.value)
 })
 
-const trnsCount = computed(() => filteredTrnsIds.value.length)
+const trnsCount = computed(() => filteredTrnsIds.value?.length ?? 0)
 
 function setFilterTrnsType(type: TrnType) {
   filterTrnsType.value = type
@@ -52,7 +52,7 @@ function onClickEdit(props) {
   //- Header
   div
     .pb-2.flex.items-center.justify-between.gap-2(
-      v-if="trnsIds.length > 0 || defaultFilterTrnsPeriod"
+      v-if="trnsCount > 0 || defaultFilterTrnsPeriod"
       class="!pb-3"
     )
       //- Title
@@ -73,7 +73,7 @@ function onClickEdit(props) {
           ) {{ $t('common.all') }}
 
     //- TypeSelector
-    .pb-2(v-if="trnsIds.length > 0")
+    .pb-2(v-if="trnsCount > 0")
       UiTabs
         UiTabsItem(
           :isActive="filterTrnsType === null"

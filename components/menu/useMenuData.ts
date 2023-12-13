@@ -18,6 +18,10 @@ export default function useMenuData() {
       icon: 'mdi mdi-plus',
       name: i18n.t('trnForm.createTrn'),
     },
+    /*coda: {
+      icon: 'mdi mdi-import',
+      name: i18n.t('codaForm.import'),
+    },*/
     dashboard: {
       component: 'UiIconStat',
       name: i18n.t('stat.title'),
@@ -29,6 +33,12 @@ export default function useMenuData() {
     categories: {
       component: 'UiIconCategory',
       name: i18n.t('categories.name'),
+    },
+
+    // NAD: Added rules to menu
+    rules: {
+      icon: 'mdi mdi-cogs',
+      name: i18n.t('rules.name'),
     },
     history: {
       icon: 'mdi mdi-history',

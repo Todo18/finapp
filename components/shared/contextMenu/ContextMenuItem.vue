@@ -7,6 +7,7 @@ export default {
     selected: { type: Boolean, default: false },
     showCheckbox: { type: Boolean, default: false },
     title: { type: String, required: true },
+    active: { type: Boolean, default: false },
   },
 
   methods: {
@@ -21,11 +22,12 @@ export default {
 
 <template lang="pug">
 .item.grow.my-2(
-  :class="{ _selected: selected, _grow: grow }"
+  :class="{ _selected: selected, _grow: grow, _active: active }"
   @click="handleClick"
 )
   .item__icon(v-if="icon"): div(:class="icon")
-  .grow.text-item-base {{ title }}
+  .item__title.grow.text-item-base
+    span(v-html="title")
 
   .item__check(
     v-if="showCheckbox"
@@ -59,6 +61,9 @@ export default {
     background var(--c-bg-2)
 
   +media-hover()
+    background var(--c-item-bg-hover)
+
+  &._active
     background var(--c-item-bg-hover)
 
   &__icon
