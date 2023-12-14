@@ -23,5 +23,5 @@ yarn-debug.log*
 yarn-error.log*
 
 # Credentials
-config.json
+config.js
 coin-tracker-802c7-firebase-adminsdk-cw41p-0413bbb3de.json
