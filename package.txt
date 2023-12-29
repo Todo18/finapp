@@ -1,0 +1,4 @@
+2023-12-19
+==========
+- Had to (temporarily) downgrade package version of **highcharts**(.js) to 11.1.0, from 11.2.0, because of a syntax error(?) in latest version (at the time of writing).
+- **@vue/composition-api** is no longer a dependency... I think
