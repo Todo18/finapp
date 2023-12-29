@@ -17,8 +17,8 @@ if (route.query?.loading)
 
 function validateForm () {
   // name
-  if (!this.email) {
-    this.$notify({
+  if (!email.value) {
+    $notify({
       title: 'Login',
       text: 'Enter email address'
     })
@@ -26,8 +26,8 @@ function validateForm () {
   }
 
   // password
-  if (!this.password) {
-    this.$notify({
+  if (!password.value) {
+    $notify({
       title: 'Login',
       text: 'Enter password'
     })
@@ -37,16 +37,24 @@ function validateForm () {
   return true
 }
 
-function signInWithEmailAndPassword() {
-  if (!this.validateForm()) return
+function signInWithEmailAndPassword_() {
+  if (!validateForm()) return
 
-  this.$router.push({ query: { loading: true } })
+  router.push({ query: { loading: true } })
   //this.error = null
-  this.isLoading = true
-  this.submitted = true
+  isLoading.value = true
+  submitted.value = true
 
-  signInWithEmailAndPassword(auth, this.email, this.password)
-    .catch(e => this.notifyAboutError(e))
+  signInWithEmailAndPassword(auth, email.value, password.value)
+    .catch((e) => {
+      $notify({
+        duration: 6000,
+        text: e.message,
+        title: 'Error',
+        type: 'error',
+      })
+      isLoading.value = false
+    })
 }
 
 function signInWithGoogle() {
@@ -121,17 +129,17 @@ export default defineComponent({
 
         UiButtonBlue(
           :disabled="isLoading"
-          @click="signInWithEmailAndPassword"
+          @click="signInWithEmailAndPassword_"
         )
           | {{ $t('loginWithEmailAndPassword') }}
           transition(name="fadeIn")
             .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
               UiSpinier
 
-        UiButtonBlue(
+        //-UiButtonBlue(
           :disabled="isLoading"
           @click="signInWithGoogle"
-        )
+        //-)
           | {{ $t('loginWithGoogle') }}
           transition(name="fadeIn")
             .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
