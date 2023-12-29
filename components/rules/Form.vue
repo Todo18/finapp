@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Ref } from '@vue/composition-api'
-import generateId from '~/utils/id'
+import { type Ref } from 'vue'
+import { generateId } from '~/utils/generateId'
 import type { RuleForm, RuleID } from '~/components/rules/types'
-import type { CategoryID, CategoryItem } from '~/components/categories/types'
+import type { CategoryId, CategoryItem } from '~/components/categories/types'
 import { getPreparedFormData } from '~/components/rules/getForm'
 import { saveData } from '~/services/firebase/api'
 import { create, all } from 'mathjs'
@@ -22,10 +22,10 @@ const emit = defineEmits(['updateValue', 'afterSave'])
 
 const { ruleId, ruleForm } = toRefs(props)
 const { $store, $notify, nuxt2Context: { i18n } } = useNuxtApp()
-const editRuleId = ruleId.value ?? generateId()
+const editRuleId = ruleId?.value ?? generateId()
 
 const activeTab = ref('data')
-const activeCategoryRootId: Ref<CategoryID | 0> = ref(0)
+const activeCategoryRootId: Ref<CategoryId | 0> = ref(0)
 
 const tabs = computed(() => [{
   id: 'data',
@@ -39,7 +39,7 @@ const tabs = computed(() => [{
 /**
  * Select category
  */
- function onCategorySelect(categoryId: CategoryID | 0) {
+ function onCategorySelect(categoryId: CategoryId | 0) {
   if (categoryId === 0) {
     emit('updateValue', 'categoryId', categoryId)
     activeCategoryRootId.value = 0

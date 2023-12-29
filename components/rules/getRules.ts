@@ -1,5 +1,5 @@
 import type { RuleID, RuleItem } from '~/components/rules/types'
-import type { CategoryID, CategoryItem } from '~/components/categories/types'
+import type { CategoryId, CategoryItem } from '~/components/categories/types'
 
 export function getBuiltInRuleIds(items: Record<RuleID, RuleItem>): RuleID[] {
   const rulesIdsByName = Object.keys(items)
@@ -9,8 +9,8 @@ export function getBuiltInRuleIds(items: Record<RuleID, RuleItem>): RuleID[] {
 }
 
 export function getRuleCategory(
-  categories: Record<CategoryID, CategoryItem>,
-  categoryId: CategoryID | 0,
+  categories: Record<CategoryId, CategoryItem>,
+  categoryId: CategoryId | 0,
 ): CategoryItem | false {
   if (categoryId === 0)
     return false

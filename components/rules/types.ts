@@ -1,9 +1,9 @@
-import type { CategoryID } from '~/components/categories/types'
+import type { CategoryId } from '~/components/categories/types'
 
 export type RuleID = string
 
 export interface RuleItem {
-  categoryId: CategoryID | 0
+  categoryId: CategoryId | 0
   condition: string
   name: string
   order: number
