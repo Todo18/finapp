@@ -7,7 +7,7 @@ const props = defineProps<{
   ruleId: RuleID
 }>()
 
-const { $store, $notify } = useNuxtApp()
+const { $store, $notify, nuxt2Context: { i18n } } = useNuxtApp()
 const router = useRouter()
 
 const { ruleId } = toRefs(props)
@@ -28,7 +28,7 @@ async function onDeleteConfirm() {
       .then(() => {
         $notify({
           type: 'success',
-          text: this.$t('rules.deletedSuccess'),
+          text: i18n.t('rules.deletedSuccess'),
           title: random(successEmo),
         })
       })

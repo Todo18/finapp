@@ -376,7 +376,7 @@ div
     :visible="visibleDropdown"
   )
     template(slot="opener")
-      //-input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none.inputCode(
+      //-input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none.inputCode(
       //-  ref="conditionInput"
       //-  type="text"
       //-  :placeholder="placeholder"
@@ -385,7 +385,7 @@ div
       //-  @blur="cancel"
       //-  @input="event => $emit('input', event.target.value)"
       //-)
-      div.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none.inputCode.language-mathjs(
+      div.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none.inputCode.language-mathjs(
         ref="conditionInput"
         contenteditable="true"
         spellcheck="false"

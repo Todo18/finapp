@@ -33,17 +33,17 @@ UiPage
       to="/rules"
       custom
     )
-      a.grow.hocus_bg-skin-item-main-hover(
+      a.grow.hocus_bg-item-main-hover(
         :href="href"
         @click="navigate"
       )
         UiHeaderTitle
-          .pt-1.text-xs.font-medium.text-skin-item-base-down
+          .pt-1.text-xs.font-medium.text-item-base-down
             | {{ $t('rules.createNewTitle') }}
 
           .pb-1.flex.items-center.gap-4
             | {{ ruleForm.name ? ruleForm.name : $t("rules.form.name.label") }}
-            .w-8.h-8.rounded-full.flex-center.text-xl.text-skin-icon-base
+            .w-8.h-8.rounded-full.flex-center.text-xl.text-icon-base
 
   RulesForm(
     :ruleForm="ruleForm"

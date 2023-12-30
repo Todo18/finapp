@@ -1,18 +1,12 @@
 <script setup lang="ts">
-const { $store } = useNuxtApp()
+const { $store, nuxt2Context: { i18n } } = useNuxtApp()
 const rulesRootIds = computed(() => $store.getters['rules/rulesRootIds'])
 
 // Clear any leftovers
 $store.commit('rules/setNewRuleFromTrn')
-</script>
 
-<script lang="ts">
-export default defineComponent({
-  head() {
-    return {
-      title: this.$t('rules.title'),
-    }
-  },
+useHead({
+  title: i18n.t('rules.title'),
 })
 </script>
 
@@ -34,7 +28,7 @@ UiPage
   template(#bottom)
     .pb-4.px-2.flex.justify-evenly.gap-6
       //- Create
-      .cursor-pointer.grow.py-3.px-5.flex-center.rounded-full.text-sm.bg-skin-item-main-bg.hocus_bg-skin-item-main-hover(
+      .cursor-pointer.grow.py-3.px-5.flex-center.rounded-full.text-sm.bg-item-main-bg.hocus_bg-item-main-hover(
         class="basis-1/2 max-w-[280px]"
         @click="$router.push('/rules/new')"
       ) {{ $t('rules.new') }}

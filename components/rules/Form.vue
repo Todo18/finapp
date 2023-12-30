@@ -39,7 +39,7 @@ const tabs = computed(() => [{
 /**
  * Select category
  */
- function onCategorySelect(categoryId: CategoryId | 0) {
+ function onCategorySelect(categoryId: CategoryId | 0, _: boolean) {
   if (categoryId === 0) {
     emit('updateValue', 'categoryId', categoryId)
     activeCategoryRootId.value = 0
@@ -134,8 +134,8 @@ div
     class="top-[60px] bg-white/70 dark_bg-dark3/70"
   )
     .px-2
-      UiTabs2
-        UiTabsItem2.md_text-lg(
+      UiTabs
+        UiTabsItem.md_text-lg(
           v-for="tab in tabs"
           v-if="!tab.isHidden"
           :key="tab.id"
@@ -150,8 +150,8 @@ div
     //-----------------------------------
     template(v-if="activeTab === 'data'")
       .mb-4
-        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('rules.form.name.label') }}
-        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none(
+        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('rules.form.name.label') }}
+        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none(
           :placeholder="$t('rules.form.name.placeholder')"
           :value="ruleForm.name"
           type="text"
@@ -159,7 +159,7 @@ div
         )
 
       .mb-4
-        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('rules.form.condition.label') }}
+        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('rules.form.condition.label') }}
         SharedAutocomplete(
           :placeholder="$t('rules.form.condition.placeholder')"
           :value="ruleForm.condition"
@@ -167,11 +167,11 @@ div
           @update="value => emit('updateValue', 'condition', value)"
         )
 
-    //- Parent
+    //- Category
     //---------------------------------
     template(v-if="activeTab === 'category'")
-      .cursor-pointer.mb-4.py-3.px-2.gap-x-3.flex-center.rounded-md.text-center.bg-skin-item-main-bg.hocus_bg-skin-item-main-hover(
-        :class="{ '!cursor-default !bg-skin-item-main-active': ruleForm.categoryId === 0 }"
+      .cursor-pointer.mb-4.py-3.px-2.gap-x-3.flex-center.rounded-md.text-center.bg-item-main-bg.hocus_bg-item-main-hover(
+        :class="{ '!cursor-default !bg-item-main-active': ruleForm.categoryId === 0 }"
         @click="onCategorySelect(0)"
       ) {{ $t('rules.form.category.no') }}
       template(v-if="activeCategoryRootId === 0")
@@ -180,7 +180,7 @@ div
           :ids="$store.getters['categories/categoriesRootIds']"
           :slider="() => ({})"
           class="!gap-x-1"
-          @onClick="onCategorySelect"
+          @click="onCategorySelect"
         )
       template(v-if="activeCategoryRootId !== 0")
         CategoriesList(
@@ -188,15 +188,14 @@ div
           :ids="$store.getters['categories/getChildCategoriesIds'](activeCategoryRootId)"
           :slider="() => ({})"
           class="!gap-x-1"
-          @onClick="onCategorySelect"
+          @click="onCategorySelect"
         )
     
     //- Save
     //---------------------------------
-    .pt-4.pb-6
-      SharedButton(
-        :class="['_text-center _blue2 _ml-big', { _inline: $store.state.ui.pc }]"
-        :title="$t('rules.form.save')"
-        @onClick="onSave"
-      )
+    .pt-4.pb-6.flex-center
+      UiButtonBlue(
+        maxWidth
+        @click="onSave"
+      ) {{ $t('base.save') }}
 </template>

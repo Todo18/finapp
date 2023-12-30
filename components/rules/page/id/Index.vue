@@ -61,6 +61,10 @@ const onClickEdit = () => router.push(`/rules/${ruleId.value}/edit`)
 
 hljs.registerLanguage("mathjs", lang)
 onMounted(() => hljs.highlightAll())
+
+useHead({
+  title: rule.value.name,
+})
 </script>
 
 <template lang="pug">
@@ -71,17 +75,17 @@ UiPage(v-if="rule")
       to="/rules"
       custom
     )
-      a.grow.hocus_bg-skin-item-main-hover(
+      a.grow.hocus_bg-item-main-hover(
         :href="href"
         @click="navigate"
       )
         UiHeaderTitle
-          .pt-1.text-xs.font-medium.text-skin-item-base-down
+          .pt-1.text-xs.font-medium.text-item-base-down
             | {{ $t('rules.title') }}
 
           .pb-1.flex.items-center.gap-4
             | {{ rule.name }}
-            .w-8.h-8.rounded-full.flex-center.text-xl.text-skin-icon-base(
+            .w-8.h-8.rounded-full.flex-center.text-xl.text-icon-base(
               :style="{ background: ruleCategory.color }"
             )
               div(:class="ruleCategory.icon")
@@ -92,7 +96,7 @@ UiPage(v-if="rule")
 
   //- Conditional expression
   .mb-12(v-if="rule.condition")
-    .pb-3.px-2.flex.gap-2.text-lg.leading-none.font-nunito.font-semibold.text-skin-item-base
+    .pb-3.px-2.flex.gap-2.text-lg.leading-none.font-nunito.font-semibold.text-item-base
       div {{ $t('rules.form.condition.label') }}
 
     .px-2

@@ -127,8 +127,8 @@ div(v-if="walletForm")
         )
 
       .mb-4
-        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('wallets.form.accountNumber.label') }}
-        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none(
+        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('wallets.form.accountNumber.label') }}
+        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none(
           :placeholder="$t('wallets.form.accountNumber.placeholder')"
           :value="walletForm.accountNumber"
           type="text"
@@ -136,8 +136,8 @@ div(v-if="walletForm")
         )
 
       .mb-4
-        .pb-2.text-skin-item-base-down.text-sm.leading-none {{ $t('wallets.form.openingBalance.label') }}
-        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-skin-item-base.bg-skin-item-main-bg.border.border-solid.border-skin-item-main-hover.placeholder_text-skin-item-base-down.transition.ease-in-out.focus_text-skin-item-base-up.focus_bg-skin-item-main-hover.focus_border-blue3.focus_outline-none(
+        .pb-2.text-item-base-down.text-sm.leading-none {{ $t('wallets.form.openingBalance.label') }}
+        input.w-full.m-0.py-3.px-4.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none(
           :placeholder="$t('wallets.form.openingBalance.placeholder')"
           :value="walletForm.openingBalance"
           type="number"

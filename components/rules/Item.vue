@@ -18,9 +18,9 @@ const onClickItem = () => emit('onClick', props.id)
 </script>
 
 <template lang="pug">
-.cursor-pointer.py-2.px-2.gap-x-3.flex.items-center.rounded-md.bg-skin-item-main-bg.hocus_bg-skin-item-main-hover(
+.cursor-pointer.py-2.px-2.gap-x-3.flex.items-center.rounded-md.bg-item-main-bg.hocus_bg-item-main-hover(
   v-if="rule"
-  :class="{ '!cursor-default !bg-skin-item-main-active': activeItemId === id }"
+  :class="{ '!cursor-default !bg-item-main-active': activeItemId === id }"
   @click="onClickItem"
 )
   .w-8.h-8.flex.items-center.justify-center.rounded-full.text-xl.leading-none.text-neutral-50(
@@ -28,5 +28,5 @@ const onClickItem = () => emit('onClick', props.id)
     ): div(:class="ruleCategory.icon")
 
   .grow.truncate
-    .leading-none.text-sm.text-skin-item-base {{ rule.name }}
+    .leading-none.text-sm.text-item-base {{ rule.name }}
 </template>

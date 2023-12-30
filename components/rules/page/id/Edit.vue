@@ -3,7 +3,7 @@ import type { RuleID, RuleItem } from '~/components/rules/types'
 import { getPreparedFormData } from '~/components/rules/getForm'
 import { getRuleCategory } from '~/components/rules/getRules'
 
-const { $store } = useNuxtApp()
+const { $store, nuxt2Context: { i18n } } = useNuxtApp()
 const router = useRouter()
 const route = useRoute()
 
@@ -15,15 +15,9 @@ const ruleCategory = computed(() =>
 
 const updateValue = (id, value) => ruleForm.value[id] = value
 const afterSave = () => router.replace(`/rules/${ruleId.value}`)
-</script>
 
-<script lang="ts">
-export default defineComponent({
-  head() {
-    return {
-      title: `${this.$t('base.edit')}: ${this.ruleForm.name ? this.ruleForm.name : this.$t('rules.form.name.label')}`,
-    }
-  },
+useHead({
+  title: `${i18n.t('base.edit')}: ${ruleForm.value?.name ? ruleForm.value?.name : i18n.t('rules.form.name.label')}`,
 })
 </script>
 
@@ -35,17 +29,17 @@ UiPage(v-if="rule")
       to="/rules"
       custom
     )
-      a.grow.hocus_bg-skin-item-main-hover(
+      a.grow.hocus_bg-item-main-hover(
         :href='href'
         @click='navigate'
       )
         UiHeaderTitle
-          .pt-1.text-xs.font-medium.text-skin-item-base-down
+          .pt-1.text-xs.font-medium.text-item-base-down
             | {{ $t('rules.title') }}
 
           .pb-1.flex.items-center.gap-4
             | {{ ruleForm.name }}
-            .w-8.h-8.rounded-full.flex-center.text-xl.text-skin-icon-base
+            .w-8.h-8.rounded-full.flex-center.text-xl.text-icon-base
 
     template(#actions)
       RulesDelete(:ruleId="ruleId")
