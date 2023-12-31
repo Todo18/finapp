@@ -10,5 +10,9 @@ export function state(): TrnsState {
       show: false,
       id: null,
     },
+    noteModal: {
+      show: false,
+      blobUri: null,
+    },
   }
 }

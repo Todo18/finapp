@@ -9,4 +9,8 @@ export interface TrnsState {
     show: boolean
     id: null | string
   }
+  noteModal: {
+    show: boolean
+    blobUri: null | string
+  }
 }
