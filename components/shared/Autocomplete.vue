@@ -8,6 +8,7 @@ export default {
   data() {
     return {
       visibleDropdown: false,
+      dropDownPosition: { left: true, top: 'computed' },
       activeMenuItem: undefined,
       filter: '',
       tooltip: undefined,
@@ -364,6 +365,9 @@ export default {
       this.jar.updateCode(v)
       pos.end = pos.start += v.length - pv.length
       this.jar.restore(pos)
+      
+      // Make sure dropdown stays aligned
+      this.dropDownPosition = { left: true, top: 'computed' }
     }
   }
 }
@@ -372,7 +376,7 @@ export default {
 <template lang="pug">
 div
   SharedContextMenu(
-    :position="{ left: true, top: true }"
+    :position="dropDownPosition"
     :visible="visibleDropdown"
   )
     template(slot="opener")

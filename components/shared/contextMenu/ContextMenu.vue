@@ -1,8 +1,21 @@
 <script>
 export default {
+  setup() {
+    const contextMenuOpener = ref()
+
+    return {
+      contextMenuOpener,
+    }
+  },
+
   props: {
     visible: { type: Boolean, default: false },
     position: { type: Object, default: () => {} },
+  },
+
+  mounted() {
+    //this.anchor = { clientRect: this.contextMenuOpener.getBoundingClientRect() }
+    //clientRect = this.$slots.opener[0].elm?.getBoundingClientRect()
   },
 
   computed: {
@@ -15,27 +28,25 @@ export default {
     },
 
     positionStyles() {
+      const styles = {}
+      let clientRect = {}
+
+      if (this.contextMenuOpener) clientRect = this.contextMenuOpener.getBoundingClientRect()
+      //or: clientRect = this.$slots.opener[0].elm?.getBoundingClientRect()
+
+      if (this.position.top && typeof this.position.top === 'string') {
+        styles.top = this.position.top === 'computed' ? `${clientRect.height ?? 48}px` : this.position.top
+      }
       if (this.position && this.position.left && typeof this.position.left === 'string') {
-        return {
-          left: this.position.left,
-          maxWidth: `${this.$store.state.ui.width - 24}px`,
-        }
+        styles.left = this.position.left
+        styles.maxWidth = `${this.$store.state.ui.width - 24}px`
       }
       if (this.position && this.position.right && typeof this.position.right === 'string') {
-        if (this.position.top && typeof this.position.top === 'string') {
-          return {
-            right: this.position.right,
-            top: this.position.top,
-            maxWidth: `${this.$store.state.ui.width - 24}px`,
-          }
-        }
-        return {
-          right: this.position.right,
-          maxWidth: `${this.$store.state.ui.width - 24}px`,
-        }
+        styles.right = this.position.right
+        styles.maxWidth = `${this.$store.state.ui.width - 24}px`
       }
 
-      return null
+      return styles
     },
   },
 }
@@ -61,7 +72,10 @@ export default {
       .context-menu__desc(v-if="$slots.desc")
         slot(name="desc")
 
-  .context-menu__opener(@click="$emit('onClickOpener')")
+  .context-menu__opener(
+    ref="contextMenuOpener"
+    @click="$emit('onClickOpener')"
+  )
     template(v-if="$slots.opener")
       slot(name="opener")
     template(v-else)
