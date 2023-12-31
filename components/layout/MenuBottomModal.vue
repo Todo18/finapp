@@ -35,7 +35,7 @@ Portal(to="modal")
           :class="getStyles('item', ['link', 'rounded', 'menu', 'menuModal'])"
           @click="onClickTheme(close)"
         )
-          .text-xl.mdi.mdi-palette
+          .text-xl.mdi(:class="$nuxt.$colorMode.value === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'")
           .text-sm {{ $t('theme.change') }}
 </template>
 

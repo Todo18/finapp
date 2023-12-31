@@ -58,7 +58,7 @@ UiPage
 
         UiButtonSecond(
           :title="$t('theme.change')"
-          icon="mdi mdi-palette"
+          :icon="$nuxt.$colorMode.value === 'dark' ? 'mdi mdi-weather-sunny' : 'mdi mdi-weather-night'"
           @click="$store.dispatch('ui/changeTheme')"
         )
 

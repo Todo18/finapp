@@ -10,7 +10,8 @@ const { toggleWalletFilter } = useFilter()
     .text-xl.font-bold.text-neutral-500.dark_text-neutral-200.font-nunito
       | {{ $t('appName') }}
 
-    .mdi.mdi-palette.cursor-pointer.text-item-base-down.text-xl.hocus_text-item-base-up(
+    .mdi.cursor-pointer.text-item-base-down.text-xl.hocus_text-item-base-up(
+      :class="$nuxt.$colorMode.value === 'dark' ? 'mdi-weather-sunny' : 'mdi-weather-night'"
       @click="$store.dispatch('ui/changeTheme')"
     )
 
