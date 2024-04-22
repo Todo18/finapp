@@ -151,4 +151,14 @@ export default defineNuxtConfig({
       }],
     },
   },
+
+  serverMiddleware: [
+    { path: '/api/coda', handler: '~/api/coda/index.js' },
+  ],
+
+  build: {
+    babel: {
+      plugins: ['@babel/plugin-syntax-import-attributes'],
+    },
+  },
 })

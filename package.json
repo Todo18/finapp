@@ -16,6 +16,7 @@
     "deploy-func": "firebase deploy --only functions"
   },
   "dependencies": {
+    "@babel/plugin-syntax-import-attributes": "^7.24.1",
     "@nuxtjs/i18n": "^7.3.1",
     "@simonwep/pickr": "^1.8.2",
     "@vue/composition-api": "^1.7.2",
