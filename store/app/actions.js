@@ -13,6 +13,9 @@ export default {
 
       if (!user) {
         dispatch('clearUserData')
+
+        // NAD: Sign out when there's no user
+        dispatch('user/signOut')
         return
       }
 
