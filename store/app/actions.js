@@ -15,7 +15,7 @@ export default {
         dispatch('clearUserData')
 
         // NAD: Sign out when there's no user
-        dispatch('user/signOut')
+        dispatch('user/signOut', null, { root: true })
         return
       }
 
