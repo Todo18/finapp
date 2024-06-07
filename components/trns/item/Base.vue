@@ -8,7 +8,7 @@ const props = defineProps<{
   trnId: TrnId
   slider?: any
 }>()
-const emit = defineEmits(['onClickEdit'])
+const emit = defineEmits(['onClickEdit', 'onClickEditCategory'])
 
 const { $store } = useNuxtApp()
 const $trnForm = useTrnFormStore()
@@ -36,6 +36,17 @@ const actions = {
     emit('onClickEdit', props.trnId)
   },
 
+  onOpenEditCategory: (event) => {
+    event.stopPropagation()
+
+    if (props.slider)
+      props.slider.slideTo(1)
+
+    trnFormEdit(props.trnId)
+    $trnForm.ui.catsRootModal = true
+    emit('onClickEditCategory', props.trnId)
+  },
+
   // TODO: useFilter
   onSetFilter: (event) => {
     if (props.slider)
@@ -59,7 +70,7 @@ const actions = {
   .text-neutral-50.text-xl.leading-none.w-8.h-8.rounded-full.justify-center.items-center.flex(
     :style="{ background: trnItem.category.color }"
     :class="[{ 'cursor-pointer': !slider }]"
-    @click="actions.onSetFilter"
+    @click="actions.onOpenEditCategory"
   ): div(:class="trnItem.category.icon")
 
   .grow
