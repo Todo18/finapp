@@ -1,13 +1,13 @@
 <script setup lang="ts">
-import { GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
 import { auth } from '~/services/firebase/api'
 
 const { $notify } = useNuxtApp()
 const route = useRoute()
 const router = useRouter()
 
-const email = ref("")
-const password = ref("")
+const email = ref('')
+const password = ref('')
 
 const isLoading = ref(false)
 const submitted = ref(false)
@@ -15,12 +15,12 @@ const submitted = ref(false)
 if (route.query?.loading)
   isLoading.value = true
 
-function validateForm () {
+function validateForm() {
   // name
   if (!email.value) {
     $notify({
       title: 'Login',
-      text: 'Enter email address'
+      text: 'Enter email address',
     })
     return false
   }
@@ -29,7 +29,7 @@ function validateForm () {
   if (!password.value) {
     $notify({
       title: 'Login',
-      text: 'Enter password'
+      text: 'Enter password',
     })
     return false
   }
@@ -38,10 +38,11 @@ function validateForm () {
 }
 
 function signInWithEmailAndPassword_() {
-  if (!validateForm()) return
+  if (!validateForm())
+    return
 
   router.push({ query: { loading: true } })
-  //this.error = null
+  // this.error = null
   isLoading.value = true
   submitted.value = true
 
@@ -114,7 +115,7 @@ export default defineComponent({
         .inputText
           input(
             type="text"
-            v-bind:placeholder="$t('email')" 
+            v-bind:placeholder="$t('email')"
             v-model="email"
             :class="{ 'is-invalid': submitted && !email }"
           ).inputText__value
@@ -122,7 +123,7 @@ export default defineComponent({
         .inputText
           input(
             type="password"
-            v-bind:placeholder="$t('password')" 
+            v-bind:placeholder="$t('password')"
             v-model="password"
             :class="{ 'is-invalid': submitted && !password }"
           ).inputText__value

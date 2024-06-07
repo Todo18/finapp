@@ -1,9 +1,9 @@
 import localforage from 'localforage'
 import dayjs from 'dayjs'
+import Tesseract from 'tesseract.js'
 import { removeTrnToAddLaterLocal, removeTrnToDeleteLaterLocal, saveTrnIDforDeleteWhenClientOnline, saveTrnToAddLaterLocal } from './helpers'
 import { getDataAndWatch, removeData, saveData, unsubscribeData, updateData } from '~/services/firebase/api'
 import type { Transaction, Transfer, TrnId } from '~/components/trns/types'
-import Tesseract from 'tesseract.js';
 
 export default {
   // init
@@ -39,14 +39,13 @@ export default {
     const prevBlob = trns[id]?.noteBlob
 
     // Flatten blob metadata
-    if (blob != null) {
-      valuesWithEditDate.noteBlob = { name: blob.name, type: blob.type } 
-    }
+    if (blob != null)
+      valuesWithEditDate.noteBlob = { name: blob.name, type: blob.type }
 
     // Must delete, since Firebase will throw an error for "undefined" props (backwards compatible)
-    /*else {
+    /* else {
       delete valuesWithEditDate.noteBlob
-    }*/
+    } */
 
     localforage.setItem('finapp.trns', { ...trns, [id]: valuesWithEditDate })
     commit('setTrns', Object.freeze({ ...trns, [id]: valuesWithEditDate }))
@@ -85,28 +84,30 @@ export default {
           return Tesseract.recognize(
             blob,
             'nld+eng',
-            { logger: m => console.log(m) }
+            { logger: m => console.log(m) },
           ).then(({ data: { text } }) => {
             // Update with fulltext
-            dispatch('addTrn', { id, values: { ...values, fullText: text }})
+            dispatch('addTrn', { id, values: { ...values, fullText: text } })
           })
         })
         .catch((reason) => {
           console.error(`Couldn't store note blob under users/${uid}/trns/${id}: ${reason.toString()}`)
         })
-    } else {
+    }
+    else {
       _saveData()
     }
 
     // If only updating (fulltext) after the fact, don't clear modal
-    if (values.fullText) return
+    if (values.fullText)
+      return
 
     // TODO: clean form
-    //const { clearExpression } = useCalculator()
-    //clearExpression()
+    // const { clearExpression } = useCalculator()
+    // clearExpression()
 
-    //const { clearNote } = manageNote()
-    //clearNote()
+    // const { clearNote } = manageNote()
+    // clearNote()
 
     // TODO: move offline logic to pinia store
     return true
@@ -136,7 +137,7 @@ export default {
     removeObject(`users/${uid}/trns/${id}/${blobName}`)
       .then(() => {
         // This happens automatically when all files are removed from the "prefix" (virtual folder)
-        //removeObject(`users/${uid}/trns/${id}/`)
+        // removeObject(`users/${uid}/trns/${id}/`)
         _removeData()
       })
       .catch((reason) => {
@@ -145,16 +146,16 @@ export default {
   },
 
   deleteTrnsByIds({ rootState }, trnsIds) {
-    /*const uid = rootState.user.user.uid
+    /* const uid = rootState.user.user.uid
     const trnsForDelete = {}
     for (const trnId of trnsIds)
       trnsForDelete[trnId] = null
 
-    updateData(`users/${uid}/trns`, trnsForDelete)*/
+    updateData(`users/${uid}/trns`, trnsForDelete) */
 
     // NAD: Make sure everything's deleted, including notes
     for (const trnId of trnsIds)
-      this.deleteTrn({commit, rootState}, trnId)
+      this.deleteTrn({ commit, rootState }, trnId)
   },
 
   unsubscribeTrns({ rootState }) {

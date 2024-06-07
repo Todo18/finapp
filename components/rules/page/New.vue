@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { RuleItem } from '~/components/rules/types'
+import type { RuleItem } from '~/components/rules/types'
 import { getPreparedFormData } from '~/components/rules/getForm'
 import { getRuleCategory } from '~/components/rules/getRules'
 
@@ -19,7 +19,7 @@ const afterSave = () => router.replace('/rules/')
 export default defineComponent({
   head() {
     return {
-      title: `${this.$t('base.add')}: ${this.ruleForm.name ? this.ruleForm.name : this.$t('rules.form.name.label')}`,
+      title: `${this.$t('base.add')}: ${this.ruleForm?.name ? this.ruleForm.name : this.$t('rules.form.name.label')}`,
     }
   },
 })

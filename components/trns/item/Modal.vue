@@ -5,7 +5,7 @@ import { useTrnForm } from '~/components/trnForm/useTrnForm'
 
 function getExtension(uri) {
   const filename = new URL(uri).pathname
-  return filename.slice((filename.split('?')[0].lastIndexOf(".") - 1 >>> 0) + 2)
+  return filename.slice((filename.split('?')[0].lastIndexOf('.') - 1 >>> 0) + 2)
 }
 
 // TODO: useFilter
@@ -114,7 +114,7 @@ export default {
       this.$store.commit('rules/setNewRuleFromTrn', trn)
       this.$store.commit('trns/hideTrnModal')
       this.$store.commit('trns/setTrnModalId', null)
-      this.router.push('/rules/new')
+      this.$router.push('/rules/new')
     },
 
     handleShowNote() {
@@ -122,14 +122,14 @@ export default {
 
       // If not an image (e.g. a pdf), just open the link in an external window
       // NAD: For the moment we'll always do this, because we need to activate cors first (see: useTrn.formatTrnItem)
-      //if (!["jfif","jpe","jpeg","jpg","png"].includes(getExtension(uri))) {
-        window.open(uri, '_blank')
+      // if (!["jfif","jpe","jpeg","jpg","png"].includes(getExtension(uri))) {
+      window.open(uri, '_blank')
       //  return
-      //}
+      // }
 
       // Otherwise, show inline!
-      //this.$store.commit('trns/showTrnNoteModal', uri)
-    }
+      // this.$store.commit('trns/showTrnNoteModal', uri)
+    },
   },
 }
 </script>

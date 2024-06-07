@@ -50,6 +50,9 @@ UiPage(v-if="wallet")
       a.grow.hocus_bg-item-main-hover(:href="href" @click="navigate")
         UiHeaderTitle
           .pt-1.text-xs.font-medium.text-item-base-down
+            //- NAD: This appears to be troublesome when used in combination with inline i18n (see below)
+            //- It will render, but with a console warning. An easy solution is simply to move the i18n to the "locales",
+            //- but I don't wanna mess too much with OC
             | {{ $t("wallets.title") }}
 
           .pb-1.flex.items-center.gap-3
