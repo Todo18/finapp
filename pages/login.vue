@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, browserLocalPersistence } from 'firebase/auth'
 import { auth } from '~/services/firebase/api'
 
 const { $notify } = useNuxtApp()
@@ -46,7 +46,21 @@ function signInWithEmailAndPassword_() {
   isLoading.value = true
   submitted.value = true
 
-  signInWithEmailAndPassword(auth, email.value, password.value)
+  setPersistence(auth, browserLocalPersistence)
+    .then(() => signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(() => {
+        // Create a custom JWT that will last longer than the default 1 hour
+        // FIXME: Move this into a server API endpoint (uses Firebase Admin SDK), and then send result back to client
+        // auth
+        //   .createCustomToken(user.uid)
+        //   .then((customToken) => {
+        //     user.customToken = customToken
+        //     dispatch('setUser', user)
+        //   })
+        //   .catch((error) => {
+        //     console.error('Error creating custom token:', error)
+        //   })
+      }))
     .catch((e) => {
       $notify({
         duration: 6000,
@@ -109,42 +123,43 @@ export default defineComponent({
     .flex.flex-col.items-center.justify-center.pb-10
       UiLogo
 
-      .px-3.py-8.flex.flex-col.items-center(
-        class="min-w-[280px]"
-      )
-        .inputText
-          input(
-            type="text"
-            v-bind:placeholder="$t('email')"
-            v-model="email"
-            :class="{ 'is-invalid': submitted && !email }"
-          ).inputText__value
-
-        .inputText
-          input(
-            type="password"
-            v-bind:placeholder="$t('password')"
-            v-model="password"
-            :class="{ 'is-invalid': submitted && !password }"
-          ).inputText__value
-
-        UiButtonBlue(
-          :disabled="isLoading"
-          @click="signInWithEmailAndPassword_"
+      form
+        .px-3.py-8.flex.flex-col.items-center(
+          class="min-w-[280px]"
         )
-          | {{ $t('loginWithEmailAndPassword') }}
-          transition(name="fadeIn")
-            .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
-              UiSpinier
+          .inputText
+            input(
+              type="text"
+              v-bind:placeholder="$t('email')"
+              v-model="email"
+              :class="{ 'is-invalid': submitted && !email }"
+            ).inputText__value
 
-        //-UiButtonBlue(
-          :disabled="isLoading"
-          @click="signInWithGoogle"
-        //-)
-          | {{ $t('loginWithGoogle') }}
-          transition(name="fadeIn")
-            .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
-              UiSpinier
+          .inputText
+            input(
+              type="password"
+              v-bind:placeholder="$t('password')"
+              v-model="password"
+              :class="{ 'is-invalid': submitted && !password }"
+            ).inputText__value
+
+          UiButtonBlue(
+            :disabled="isLoading"
+            @click="signInWithEmailAndPassword_"
+          )
+            | {{ $t('loginWithEmailAndPassword') }}
+            transition(name="fadeIn")
+              .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
+                UiSpinier
+
+          //-UiButtonBlue(
+            :disabled="isLoading"
+            @click="signInWithGoogle"
+          //-)
+            | {{ $t('loginWithGoogle') }}
+            transition(name="fadeIn")
+              .absolute.inset-0.w-full.h-full.flex-center.bg-accent-2(v-if="isLoading")
+                UiSpinier
 
   .p-4.md_p-6
     CommonCopyright

@@ -23,4 +23,4 @@ if exist npm.cmd (
 popd
 endlocal
 
-yarn dev
+npm run dev

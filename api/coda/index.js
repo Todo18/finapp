@@ -1,4 +1,4 @@
-import { processFile } from 'file:///C:/Users/robeyto/Projecten/CoinTracker/coda/daemon.mjs'
+// import { processFile } from 'file:///C:/Users/robeyto/Projecten/CoinTracker/coda/daemon.mjs'
 
 export default function (req, res, next) {
   // req is the Node.js http request object
@@ -18,7 +18,7 @@ export default function (req, res, next) {
   // The 'end' event indicates that the entire body has been received.
   req.on('end', () => {
     try {
-      const result = processFile(fileName, { contents: fileContents })
+      // const result = processFile(fileName, { contents: fileContents })
       res.writeHead(200, { 'Content-Type': 'application/json' })
       res.end(JSON.stringify({
         description: `Hello, ${fileName}!`,

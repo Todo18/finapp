@@ -25,4 +25,4 @@ endlocal
 
 rem yarn build
 rem yarn upload rem == upload-min
-yarn deploy
+npm run deploy
