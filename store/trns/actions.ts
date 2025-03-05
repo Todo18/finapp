@@ -159,6 +159,7 @@ export default {
   },
 
   unsubscribeTrns({ rootState }) {
+    if (!rootState.user || !rootState.user.user) return
     const uid = rootState.user.user.uid
     unsubscribeData(`users/${uid}/trns`)
   },

@@ -34,8 +34,10 @@ export default {
     return result
   },
 
-  unsubscribeWallets({ rootGetters }) {
-    const uid = rootGetters['user/userUid']
+  unsubscribeWallets({ rootState }) {
+    //const uid = rootGetters['user/userUid']
+    if (!rootState.user || !rootState.user.user) return
+    const uid = rootState.user.user.uid
     unsubscribeData(`users/${uid}/accounts`)
   },
 }

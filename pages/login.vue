@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, browserLocalPersistence } from 'firebase/auth'
+import { GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, browserLocalPersistence, setPersistence } from 'firebase/auth'
 import { auth } from '~/services/firebase/api'
 
 const { $notify } = useNuxtApp()

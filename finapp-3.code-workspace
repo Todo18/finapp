@@ -6,6 +6,9 @@
     },
     {
       "path": "../coda"
+    },
+    {
+      "path": "../finapp-coda"
     }
   ],
   "settings": {
