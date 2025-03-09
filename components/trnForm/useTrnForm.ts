@@ -170,6 +170,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
       if (props.trn.receipt) {
         const { $store } = useNuxtApp()
         const uid = $store.state.user.user.uid
+        // NAD: TODO: https://firebase.google.com/docs/storage/web/download-files#cors_configuration
         getObject(`users/${uid}/trns/${props.trnId}/${props.trn.receipt.uid}`)
           .then((blob: Blob) => {
             values.receipt = blob

@@ -115,7 +115,7 @@ export default {
     const uid = rootState.user.user.uid
     const trns = { ...rootState.trns.items }
 
-    const blodUid = trns[id].receipt?.uid
+    const blodUid = trns[id]?.receipt?.uid
 
     delete trns[id]
     commit('setTrns', Object.freeze(trns))

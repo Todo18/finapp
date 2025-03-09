@@ -1,7 +1,7 @@
 import localforage from 'localforage'
 import type { TrnId } from '~/components/trns/types'
 
-const rootPath = 'finapp3.trns.offline'
+const rootPath = 'finapp.trns.offline'
 
 const actions = {
   delete: 'delete',
