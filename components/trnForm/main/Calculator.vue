@@ -47,6 +47,26 @@ onLongPress(
   },
   { modifiers: { prevent: false } },
 )
+
+function adhocUploadReceipt() {
+  // Create a temporary file input element and trigger the click event
+  const input = document.createElement('input')
+  input.type = 'file'
+  input.accept = 'image/*'
+  input.onchange = function (e) {
+    const file = (e.target as HTMLInputElement).files?.[0]
+    if (!file) return
+
+    $trnForm.values.receipt = file
+
+    input.remove()
+  }
+  input.oncancel = function () {
+    // Destroy input element again
+    input.remove()
+  }
+  input.click()
+}
 </script>
 
 <template lang="pug">
@@ -83,6 +103,12 @@ onLongPress(
       :class="{ 'text-accent-default': !!$trnForm.values.desc }"
       @click="$store.commit('trnForm/showTrnFormModal', 'description')"
     ): .mdi.mdi-comment-text-outline
+
+    //- Receipt
+    TrnFormMainCalculatorButton(
+      :class="{ 'text-accent-default': !!$trnForm.values.receiptUrl }"
+      @click="adhocUploadReceipt"
+    ): .mdi.mdi-receipt-text-outline
 
     //- Action
     TrnFormMainActionSide

@@ -25,6 +25,8 @@ export interface TrnFormValues {
 
   expenseWalletId: WalletId | null
   incomeWalletId: WalletId | null
+
+  receipt?: Blob | null
 }
 
 // export type TrnFormValues = {

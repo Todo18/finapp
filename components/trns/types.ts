@@ -3,6 +3,14 @@ import type { WalletId } from '~/components/wallets/types'
 export type TrnId = string
 export type CategoryId = string
 
+export interface Receipt {
+  uid: string
+  url: string
+  // size: number
+  // type: string
+  // name: string
+}
+
 export enum TrnType {
   Expense,
   Income,
@@ -24,7 +32,7 @@ interface BaseTrn {
   date: number
   desc?: string
   edited: number
-  noteBlob?: Blob
+  receipt?: Receipt
 }
 
 export interface Transaction extends BaseTrn {

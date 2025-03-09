@@ -1,7 +1,14 @@
 import dayjs from 'dayjs'
-import type { Transaction, Transfer } from '~/components/trns/types'
+import type { Transaction, Transfer, Receipt } from '~/components/trns/types'
 import type { TrnFormValues } from '~/components/trnForm/types'
+//import {v4 as uuidv4} from 'uuid'
+import { generateId } from '~/utils/generateId'
 
+function blobToReceipt(blob: Blob): Receipt {
+  const receiptUid: string = /*uuidv4()*/generateId()
+  return { uid: receiptUid, url: '(...)'/*URL.createObjectURL(props.receipt)*/ }
+}
+  
 function formatTransaction(props: TrnFormValues): Transaction | false {
   if (props.trnType === 2 || !props.categoryId || !props.walletId) {
     console.error('missing props', props.trnType, props.categoryId, props.walletId)
@@ -21,6 +28,9 @@ function formatTransaction(props: TrnFormValues): Transaction | false {
 
   if (props.desc)
     data.desc = props.desc
+
+  if (props.receipt) 
+    data.receipt = blobToReceipt(props.receipt)
 
   return data
 }
@@ -48,6 +58,9 @@ function formatTransfer(props: TrnFormValues): Transfer | false {
   if (props.desc)
     data.desc = props.desc
 
+  if (props.receipt)
+    data.receipt = blobToReceipt(props.receipt)
+  
   return data
 }
 

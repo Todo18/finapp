@@ -55,8 +55,8 @@ export default {
       return this.$store.state.wallets.items[this.$store.state.trns.items[this.trnId].walletId]
     },
 
-    blob() {
-      return this.trnItem.noteUri
+    receipt() {
+      return this.trnItem.receiptUri
     },
   },
 
@@ -117,8 +117,8 @@ export default {
       this.$router.push('/rules/new')
     },
 
-    handleShowNote() {
-      const uri = this.trnItem.noteUri
+    handleShowReceipt() {
+      const uri = this.trnItem.receiptUri
 
       // If not an image (e.g. a pdf), just open the link in an external window
       // NAD: For the moment we'll always do this, because we need to activate cors first (see: useTrn.formatTrnItem)
@@ -211,10 +211,10 @@ Portal(
                 )
 
             ModalButton(
-              v-if="blob"
-              :name="$t('trnForm.note.title')"
+              v-if="receipt"
+              :name="$t('trnForm.receipt.title')"
               icon="mdi mdi-receipt-text-outline"
-              @onClick="handleShowNote"
+              @onClick="handleShowReceipt"
             )
 
         .pt-4.px-4.flex-center

@@ -2,7 +2,7 @@ import localforage from 'localforage'
 import dayjs from 'dayjs'
 import Tesseract from 'tesseract.js'
 import { removeTrnToAddLaterLocal, removeTrnToDeleteLaterLocal, saveTrnIDforDeleteWhenClientOnline, saveTrnToAddLaterLocal } from './helpers'
-import { getDataAndWatch, removeData, saveData, unsubscribeData, updateData } from '~/services/firebase/api'
+import { getDataAndWatch, removeData, saveData, unsubscribeData, updateData, removeObject, uploadFile } from '~/services/firebase/api'
 import type { Transaction, Transfer, TrnId } from '~/components/trns/types'
 
 export default {
@@ -21,9 +21,10 @@ export default {
    * Create new trn
    * and save it to local storage when Client offline
    */
-  addTrn({ commit, rootState, dispatch }, { id, values }: {
+  addTrn({ commit, rootState, dispatch }, { id, values, blob = null }: {
     id: TrnId
     values: Transaction | Transfer
+    blob: Blob | null
   }) {
     const uid = rootState.user.user.uid
     const trns = rootState.trns.items
@@ -35,17 +36,13 @@ export default {
     let isTrnSavedOnline = false
     let isNoteStoredOnline = false
 
-    const blob = valuesWithEditDate.noteBlob
-    const prevBlob = trns[id]?.noteBlob
-
-    // Flatten blob metadata
-    if (blob != null)
-      valuesWithEditDate.noteBlob = { name: blob.name, type: blob.type }
+    const newBlob = valuesWithEditDate.receipt
+    const prevBlob = trns[id]?.receipt
 
     // Must delete, since Firebase will throw an error for "undefined" props (backwards compatible)
-    /* else {
-      delete valuesWithEditDate.noteBlob
-    } */
+    if (newBlob === undefined) {
+      delete valuesWithEditDate.receipt
+    }
 
     localforage.setItem('finapp.trns', { ...trns, [id]: valuesWithEditDate })
     commit('setTrns', Object.freeze({ ...trns, [id]: valuesWithEditDate }))
@@ -65,33 +62,33 @@ export default {
       return p
     }
 
-    if (prevBlob != null && (blob == null || prevBlob.name !== blob.name)) {
-      removeObject(`users/${uid}/trns/${id}/${prevBlob.name}`)
+    if (prevBlob && (!newBlob || prevBlob.uid !== newBlob.uid)) {
+      removeObject(`users/${uid}/trns/${id}/${prevBlob.uid}`)
         .catch((reason) => {
-          console.error(`Couldn't remove (previous) note blob under users/${uid}/trns/${id}: ${reason.toString()}`)
+          console.error(`Couldn't remove (previous) receipt blob under users/${uid}/trns/${id}:`, reason)
         })
     }
 
-    if (blob != null && (prevBlob == null || prevBlob.name !== blob.name)) {
-      uploadFile(`users/${uid}/trns/${id}/${blob.name}`, blob)
+    if (newBlob && (!prevBlob || prevBlob.uid !== newBlob.uid) && blob) {
+      uploadFile(`users/${uid}/trns/${id}/${newBlob.uid}`, blob)
         .then(() => {
           isNoteStoredOnline = true
-          console.debug(`Note blob stored under users/${uid}/trns/${id}`)
+          console.debug(`Receipt blob stored under users/${uid}/trns/${id}`)
 
           return _saveData()
         })
         .then(() => {
-          return Tesseract.recognize(
-            blob,
-            'nld+eng',
-            { logger: m => console.log(m) },
-          ).then(({ data: { text } }) => {
-            // Update with fulltext
-            dispatch('addTrn', { id, values: { ...values, fullText: text } })
-          })
+          // return Tesseract.recognize(
+          //   blob,
+          //   'nld+eng',
+          //   { logger: m => console.log(m) },
+          // ).then(({ data: { text } }) => {
+          //   // Update with fulltext
+          //   dispatch('addTrn', { id, values: { ...values, fullText: text } })
+          // })
         })
         .catch((reason) => {
-          console.error(`Couldn't store note blob under users/${uid}/trns/${id}: ${reason.toString()}`)
+          console.error(`Couldn't store receipt blob under users/${uid}/trns/${id}:`, reason)
         })
     }
     else {
@@ -99,8 +96,8 @@ export default {
     }
 
     // If only updating (fulltext) after the fact, don't clear modal
-    if (values.fullText)
-      return
+    // if (values.fullText)
+    //   return
 
     // TODO: clean form
     // const { clearExpression } = useCalculator()
@@ -114,11 +111,11 @@ export default {
   },
 
   // delete
-  deleteTrn({ commit, rootState }, id) {
+  deleteTrn({ commit, rootState }, id: TrnId) {
     const uid = rootState.user.user.uid
     const trns = { ...rootState.trns.items }
 
-    const blobName = trns[id].noteBlob?.name
+    const blodUid = trns[id].receipt?.uid
 
     delete trns[id]
     commit('setTrns', Object.freeze(trns))
@@ -129,19 +126,19 @@ export default {
       removeData(`users/${uid}/trns/${id}`)
         .then(() => removeTrnToDeleteLaterLocal(id))
 
-    if (blobName == null) {
+    if (!blodUid) {
       _removeData()
       return
     }
 
-    removeObject(`users/${uid}/trns/${id}/${blobName}`)
+    removeObject(`users/${uid}/trns/${id}/${blodUid}`)
       .then(() => {
         // This happens automatically when all files are removed from the "prefix" (virtual folder)
         // removeObject(`users/${uid}/trns/${id}/`)
         _removeData()
       })
       .catch((reason) => {
-        console.error(`Couldn't remove note blob under users/${uid}/trns/${id}: ${reason.toString()}`)
+        console.error(`Couldn't remove receipt blob under users/${uid}/trns/${id}:`, reason)
       })
   },
 

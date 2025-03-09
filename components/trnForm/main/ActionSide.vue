@@ -20,6 +20,7 @@ async function onClickSubmit() {
   await $store.dispatch('trns/addTrn', {
     id: trnFormData.id,
     values: trnFormData.values,
+    blob: trnFormData.blob,
   })
   $trnForm.onClear()
 }

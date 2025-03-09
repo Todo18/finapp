@@ -51,13 +51,13 @@ export default function useTrn() {
           wallet,
         }
 
-        if (trn.noteBlob != null) {
+        if (trn.receipt) {
           // Let the user know there's something there
-          formattedTrn.noteUri = '#'
+          formattedTrn.receiptUri = '#'
 
           // Reset, because we don't want to make any mistakes when editing & saving the original trn
           // NAD: For the moment we can't support edits, because we need to activate cors first (see further)
-          formattedTrn.noteBlob = null
+          formattedTrn.receiptBlob = null
 
           // Just start the download, we'll see it when we get there
           /*const img = new Image()
@@ -70,17 +70,17 @@ export default function useTrn() {
             ctx.drawImage(this, 0, 0);       // draw in image
             c.toBlob(function(blob) {        // get content as JPEG blob
               // here the image is a blob
-              formattedTrn.noteBlob = blob
+              formattedTrn.receiptBlob = blob
             }, "image/jpeg", 0.75);
           };
           //img.crossOrigin = "";              // if from different origin
           img.src = "sample-receipt.jpg"*/
 
-          console.debug(`Loading ${trn.noteBlob.name}...`)
+          console.debug(`Loading ${trn.receipt.uid}...`)
 
           // For the moment we can't support edits, because we need to activate cors first (see further)
-          getObjectURI(`users/${uid}/trns/${id}/${trn.noteBlob.name}`).then((uri) => {
-            formattedTrn.noteUri = uri
+          getObjectURI(`users/${uid}/trns/${id}/${trn.receipt.uid}`).then((uri) => {
+            formattedTrn.receiptUri = uri
 
             // NAD: This needs cors to work properly (see: https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
             /*const xhr = new XMLHttpRequest();
@@ -88,7 +88,7 @@ export default function useTrn() {
             xhr.responseType = 'blob';
             xhr.onload = (event) => {
               const blob = xhr.response;
-              formattedTrn.noteBlob = blob
+              formattedTrn.receiptBlob = blob
             };
 
             xhr.open('GET', uri);
@@ -96,7 +96,7 @@ export default function useTrn() {
           })
           
           // NAD: This needs cors to work properly (see: https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
-          //getObject(`users/${uid}/trns/${id}/${trn.noteBlob.name}`).then((blob) => formattedTrn.noteBlob = blob)
+          //getObject(`users/${uid}/trns/${id}/${trn.receipt.uid}`).then((blob) => formattedTrn.receiptBlob = blob)
         }
 
         return formattedTrn

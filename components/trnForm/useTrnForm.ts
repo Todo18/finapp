@@ -11,6 +11,7 @@ import { formatTransaction, formatTransfer } from '~/components/trnForm/utils/fo
 import { random, successEmo } from '~/assets/js/emo'
 import { validate } from '~/components/trnForm/utils/validate'
 import { generateId } from '~/utils/generateId'
+import { getObject } from '~~/services/firebase/api'
 
 export const useTrnFormStore = defineStore('trnForm', () => {
   const values = reactive<TrnFormValues>({
@@ -25,6 +26,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     categoryId: null,
     incomeWalletId: null,
     expenseWalletId: null,
+    receipt: undefined,
   })
 
   const ui = ref<TrnFormUi>({
@@ -162,6 +164,20 @@ export const useTrnFormStore = defineStore('trnForm', () => {
       values.trnType = props.trn.type
       values.desc = props.trn.desc || props.trn.description
       values.date = props.trn.date
+
+      values.receipt = null
+
+      if (props.trn.receipt) {
+        const { $store } = useNuxtApp()
+        const uid = $store.state.user.user.uid
+        getObject(`users/${uid}/trns/${props.trnId}/${props.trn.receipt.uid}`)
+          .then((blob: Blob) => {
+            values.receipt = blob
+          })
+          .catch((reason) => {
+            console.error('Error getting blob:', reason)
+          })
+      }
     }
   }
 
@@ -195,6 +211,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
       return {
         id: values.trnId ?? generateId(),
         values: data,
+        blob: values.receipt
       }
     }
     catch (e) {

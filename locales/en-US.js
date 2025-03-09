@@ -48,7 +48,7 @@ export default {
       to: 'To',
       toLong: 'To wallet',
     },
-    note: {
+    receipt: {
       title: 'View receipt'
     }
   },
