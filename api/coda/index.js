@@ -1,11 +1,20 @@
+//
+// I JUST REALIZED THAT THIS CAN ALL HAPPEN CLIENT SIDE, WITH AN ACTIVE, AUTHENTICATED FIREBASE CONNECTION
+// So move this from server-side API to client-side "service" ?
+//
 import { processFile, loadSettings, stop } from '../../../finapp-coda/worker.mjs'
+import { db } from '~/services/firebase/api'
+
+const { $store } = useNuxtApp()
 
 async function process(filename, options) {
-  // FIXME: Call only once during startup of server
-  await loadSettings();
+  // FIXME: Call only once during startup of server ?
+  const uid = $store.state.user.user.uid;
+
+  await loadSettings(db, uid);
   await processFile(filename, options);
   // FIXME: Don't call this in server mode
-  await stop();
+  // await stop();
 }
 
 export default function (req, res, next) {
