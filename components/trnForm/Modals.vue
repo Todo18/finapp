@@ -22,6 +22,7 @@ div
 
   LazyTrnFormModalCalendar(v-if="$store.state.trnForm.modal.calendar")
   LazyTrnFormModalDescription(v-if="$store.state.trnForm.modal.description")
+  LazyTrnFormModalExtraction(v-if="$store.state.trnForm.modal.extraction")
 
   //- Transaction
   LazyTrnFormModalWallets(

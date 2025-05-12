@@ -10,6 +10,7 @@ export function state() {
       transferTo: false,
       wallets: false,
       trn: false,
+      extraction: false,
     },
   }
 }

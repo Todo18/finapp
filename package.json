@@ -16,6 +16,7 @@
     "deploy-func": "firebase deploy --only functions"
   },
   "dependencies": {
+    "@azure/openai": "^2.0.0",
     "@babel/plugin-syntax-import-attributes": "^7.24.1",
     "@nuxtjs/i18n": "^7.3.1",
     "@simonwep/pickr": "^1.8.2",
@@ -39,6 +40,7 @@
     "mathjs": "^11.5.0",
     "nuxt": "^2.17.1",
     "nuxt-edge": "latest",
+    "openai": "^4.87.3",
     "pinia": "^2.1.6",
     "portal-vue": "^2.1.7",
     "simple-syntax-highlighter": "^2.2.5",

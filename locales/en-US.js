@@ -50,6 +50,10 @@ export default {
     },
     receipt: {
       title: 'View receipt'
+    },
+    extraction: {
+      title: 'Receipt',
+      status: 'Extracting information from receipt...',
     }
   },
 

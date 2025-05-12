@@ -11,7 +11,7 @@ import { formatTransaction, formatTransfer } from '~/components/trnForm/utils/fo
 import { random, successEmo } from '~/assets/js/emo'
 import { validate } from '~/components/trnForm/utils/validate'
 import { generateId } from '~/utils/generateId'
-import { getObject } from '~~/services/firebase/api'
+import { getObject } from '~/services/firebase/api'
 
 export const useTrnFormStore = defineStore('trnForm', () => {
   const values = reactive<TrnFormValues>({

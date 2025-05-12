@@ -154,6 +154,7 @@ export default defineNuxtConfig({
 
   serverMiddleware: [
     { path: '/api/coda', handler: '~/api/coda/index.js' },
+    { path: '/api/responses', handler: '~/api/responses/index.js' },
   ],
 
   build: {
