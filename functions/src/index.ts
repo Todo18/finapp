@@ -114,7 +114,11 @@ app.get('/users/:uid/categories/', async (req, res) => {
     }
 })
 
-// Expose Express API as a single Cloud Function
+app.get("/healthz", (_, res) => {
+    res.status(200).send("OK")
+})
+
+// Expose Express API as a single Cloud Function (called "api" in Firebase console)
 // NOTE: export const api = functions... will _not_ work :/
 export const api = functions
     .region('europe-west1') // Belgium
