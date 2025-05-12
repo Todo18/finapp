@@ -85,11 +85,34 @@ class Categories {
 // Build multiple CRUD interfaces
 //functions.logger.info("Hello logs!", {structuredData: true})
 //request.query.foo	 (== ?foo=...)
-app.get('/users/:uid/trns/', async (req, res) => res.send(await Trns.get(req.params.uid, req.query)))
+app.get('/users/:uid/trns/', async (req, res) => {
+    try {
+        const response = await Trns.get(req.params.uid, req.query as TrnGetOptions)
+        res.send(response)
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send({ status: 'ERROR', message: error.message })
+        } else {
+            res.status(500).send({ status: 'ERROR', message: 'Unknown error' })
+        }
+    }
+})
+
 //app.post('/', (req, res) => res.send(Widgets.create()))
 //app.put('/:id', (req, res) => res.send(Widgets.update(req.params.id, req.body)))
 //app.delete('/:id', (req, res) => res.send(Widgets.delete(req.params.id)))
-app.get('/users/:uid/categories/', async (req, res) => res.send(await Categories.get(req.params.uid/*, req.query*/)))
+app.get('/users/:uid/categories/', async (req, res) => {
+    try {
+        const response = await Categories.get(req.params.uid/*, req.query*/)
+        res.send(response)
+    } catch (error) {
+        if (error instanceof Error) {
+            res.status(500).send({ status: 'ERROR', message: error.message })
+        } else {
+            res.status(500).send({ status: 'ERROR', message: 'Unknown error' })
+        }
+    }
+})
 
 // Expose Express API as a single Cloud Function
 // NOTE: export const api = functions... will _not_ work :/
