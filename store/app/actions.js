@@ -8,7 +8,6 @@ export default {
       commit('setAppStatus', 'loading')
 
     onAuthStateChanged(auth, async (user) => {
-      debugger;
       if (this.$router.currentRoute.name === 'login')
         commit('setAppStatus', 'loading')
 

@@ -65,7 +65,6 @@ const actions = {
 
 <template lang="pug">
 .space-x-3.flex.cursor-context-menu.hocus_bg-neutral-100.dark_hocus_bg-neutral-800(
-  @click="actions.onOpenDetails"
 )
   .text-neutral-50.text-xl.leading-none.w-8.h-8.rounded-full.justify-center.items-center.flex(
     :style="{ background: trnItem.category.color }"
@@ -73,7 +72,9 @@ const actions = {
     @click="actions.onOpenEditCategory"
   ): div(:class="trnItem.category.icon")
 
-  .grow
+  .grow(
+    @click="actions.onOpenDetails"
+  )
     .items-center.flex
       .grow.text-neutral-500.dark_text-neutral-500
         //- Category
