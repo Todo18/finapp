@@ -1,0 +1,8 @@
+[
+    {
+      "origin": ["https://coin-tracker-802c7.firebaseapp.com"],
+      "method": ["GET"],
+      "responseHeader": ["Content-Type"],
+      "maxAgeSeconds": 3600
+    }
+]
