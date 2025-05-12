@@ -1,4 +1,4 @@
-import { getObjectURI } from '~/services/firebase/api'
+import { getObject, getObjectURI } from '~/services/firebase/api'
 import { formatDate } from '~/utils/formatDate'
 
 export default function useTrn() {
@@ -96,6 +96,7 @@ export default function useTrn() {
           })
           
           // NAD: This needs cors to work properly (see: https://firebase.google.com/docs/storage/web/download-files#cors_configuration)
+          // DONE: See gcloud-storage-cors.json, but this isn't used for the moment
           //getObject(`users/${uid}/trns/${id}/${trn.receipt.uid}`).then((blob) => formattedTrn.receiptBlob = blob)
         }
 
