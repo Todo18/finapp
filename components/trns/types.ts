@@ -33,6 +33,7 @@ interface BaseTrn {
   desc?: string
   edited: number
   labels?: string[]
+  ruleName?: string // for auto-imported transactions
   receipt?: Receipt
 }
 

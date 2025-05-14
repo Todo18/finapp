@@ -373,5 +373,6 @@ export default {
   labels: {
     "enriched": "Enriched",
     "imported": "Imported",
+    "rule"  : "Rule",
   }
 }

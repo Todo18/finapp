@@ -84,10 +84,12 @@ const actions = {
           .text-xs.space-x-2.items-baseline.flex(v-if="trnItem.category.parentId")
             div •
             div {{ trnItem.categoryParent.name }}
-            .label(
-              v-for="label in trnItem.labels"
-              :class="label"
-            ) {{ $t(`labels.${label}`) }}
+
+          .text-xs.label(
+            v-for="label in trnItem.labels"
+            :class="label"
+            :title="label === 'rule' ? trnItem.ruleName : undefined"
+          ) {{ $t(`labels.${label}`) }}
 
         //- Group
         .text-xs.leading-none(v-if="trnItem.groups") In group
@@ -160,4 +162,7 @@ const actions = {
 
   .imported
     background rgb(38, 166, 154)
+
+  .rule
+    background rgb(171, 71, 188)
 </style>

@@ -233,4 +233,7 @@ function setTrnEdit() {
 
     .imported
       background rgb(38, 166, 154)
+
+    .rule
+      background rgb(171, 71, 188)
 </style>
