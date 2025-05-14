@@ -85,7 +85,7 @@ const actions = {
             div •
             div {{ trnItem.categoryParent.name }}
             .label(
-              v-for="label in trnItem.labels || ['enriched']"
+              v-for="label in trnItem.labels"
               :class="label"
             ) {{ $t(`labels.${label}`) }}
 
