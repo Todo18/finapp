@@ -26,6 +26,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     categoryId: null,
     incomeWalletId: null,
     expenseWalletId: null,
+    labels: undefined,
     receipt: undefined,
   })
 
@@ -110,6 +111,10 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     // values.categoryId = null
     // values.incomeWalletId = null
     // values.expenseWalletId = null
+
+    values.labels = undefined
+
+    values.receipt = undefined
   }
 
   function onClose() {
@@ -165,7 +170,9 @@ export const useTrnFormStore = defineStore('trnForm', () => {
       values.desc = props.trn.desc || props.trn.description
       values.date = props.trn.date
 
-      values.receipt = null
+      values.labels = props.trn.labels
+
+      values.receipt = undefined
 
       if (props.trn.receipt) {
         const { $store } = useNuxtApp()

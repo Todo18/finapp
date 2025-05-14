@@ -32,6 +32,7 @@ interface BaseTrn {
   date: number
   desc?: string
   edited: number
+  labels?: string[]
   receipt?: Receipt
 }
 

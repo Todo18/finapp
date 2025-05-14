@@ -26,6 +26,8 @@ export interface TrnFormValues {
   expenseWalletId: WalletId | null
   incomeWalletId: WalletId | null
 
+  labels?: string[]
+
   receipt?: Blob | null
 }
 

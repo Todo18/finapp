@@ -369,4 +369,9 @@ export default {
   },
 
   colors: 'Colors',
+
+  labels: {
+    "enriched": "Enriched",
+    "imported": "Imported",
+  }
 }

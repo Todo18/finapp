@@ -17,7 +17,7 @@ export default {
     }
     state.newFromTrn = {
       categoryId: trn.categoryId,
-      condition: `isEqual(description, "${trn.description ?? ''}")`,
+      condition: `isEqual(description, "${trn.desc ?? trn.description ?? ''}")`,
       name: trn.category?.name ?? '',
       order: 0,
     }

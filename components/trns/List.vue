@@ -31,13 +31,13 @@ const pageNumber = ref(1)
 const isShowTrnsWithDesc = ref(false)
 
 const isTrnsWithDescription = computed(() =>
-  props.trnsIds.some(id => $store.state.trns.items[id].description))
+  props.trnsIds.some(id => $store.state.trns.items[id].desc || $store.state.trns.items[id].description))
 
 const trnsIdsWithLimit = computed(() => {
   const trnsItems = $store.state.trns.items
 
   if (props.isShowFilter && isShowTrnsWithDesc.value && isTrnsWithDescription.value)
-    return props.trnsIds.filter(id => trnsItems[id].description)
+    return props.trnsIds.filter(id => trnsItems[id].desc || trnsItems[id].description)
 
   if (props.limit > 0)
     return props.trnsIds.slice(0, props.limit)

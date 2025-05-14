@@ -64,7 +64,7 @@ const actions = {
 </script>
 
 <template lang="pug">
-.space-x-3.flex.cursor-context-menu.hocus_bg-neutral-100.dark_hocus_bg-neutral-800(
+.trnItem.space-x-3.flex.cursor-context-menu.hocus_bg-neutral-100.dark_hocus_bg-neutral-800(
 )
   .text-neutral-50.text-xl.leading-none.w-8.h-8.rounded-full.justify-center.items-center.flex(
     :style="{ background: trnItem.category.color }"
@@ -84,6 +84,10 @@ const actions = {
           .text-xs.space-x-2.items-baseline.flex(v-if="trnItem.category.parentId")
             div •
             div {{ trnItem.categoryParent.name }}
+            .label(
+              v-for="label in trnItem.labels || ['enriched']"
+              :class="label"
+            ) {{ $t(`labels.${label}`) }}
 
         //- Group
         .text-xs.leading-none(v-if="trnItem.groups") In group
@@ -141,3 +145,19 @@ const actions = {
     .pt-2.text-neutral-500.text-xs.leading-none(v-if="trnItem.desc || trnItem.description")
       | {{ trnItem.desc || trnItem.description }}
 </template>
+
+<style lang="stylus" scoped>
+.trnItem
+  .label
+    font-size 10px
+    padding 0px 8px
+    border-radius 12px
+    text-align center
+    color var(--c-font-2)
+
+  .enriched
+    background rgb(251, 192, 45)
+
+  .imported
+    background rgb(38, 166, 154)
+</style>

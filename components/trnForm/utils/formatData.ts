@@ -29,6 +29,9 @@ function formatTransaction(props: TrnFormValues): Transaction | false {
   if (props.desc)
     data.desc = props.desc
 
+  if (props.labels)
+    data.labels = props.labels
+
   if (props.receipt) 
     data.receipt = blobToReceipt(props.receipt)
 
@@ -57,6 +60,9 @@ function formatTransfer(props: TrnFormValues): Transfer | false {
 
   if (props.desc)
     data.desc = props.desc
+
+  if (props.labels)
+    data.labels = props.labels
 
   if (props.receipt)
     data.receipt = blobToReceipt(props.receipt)

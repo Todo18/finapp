@@ -76,6 +76,11 @@ function setTrnEdit() {
       )
     .trnItem__categoryName {{ $t('trnForm.transferTitle') }}
     .trnItem__date {{ formattedDate }}
+    .trnItem__labels
+      .label(
+        v-for="label in trn.labels"
+        :class="label"
+      ) {{ $t(`labels.${label}`) }}
     .flex.gap-5.items-center
       //- Expense
       div
@@ -113,9 +118,9 @@ function setTrnEdit() {
           )
 
     .trnItem__desc.whitespace-pre.font-roboto.leading-none(
-      v-if="trn.description"
+      v-if="trn.desc || trn.description"
       class="!dark_text-white/80 !text-xs"
-    ) {{ trn.description }}
+    ) {{ trn.desc || trn.description }}
 
   //- Transaction
   template(v-else)
@@ -138,6 +143,11 @@ function setTrnEdit() {
       .walletName {{ wallet.name }}
 
     .trnItem__date {{ formattedDate }}
+    .trnItem__labels
+      .label(
+        v-for="label in trn.labels"
+        :class="label"
+      ) {{ $t(`labels.${label}`) }}
     .trnItem__amount.text-4xl(
       @click.stop="setTrnEdit"
     )
@@ -149,7 +159,7 @@ function setTrnEdit() {
         align="center"
       )
 
-    .trnItem__desc(v-if="trn.description") {{ trn.description }}
+    .trnItem__desc(v-if="trn.desc || trn.description") {{ trn.desc || trn.description }}
 </template>
 
 <style lang="stylus" scoped>
@@ -181,7 +191,7 @@ function setTrnEdit() {
     fontFamilyNunito()
 
   &__date
-    padding-bottom $m8
+    padding-bottom $m6
     font-size 14px
 
   &__desc
@@ -203,4 +213,24 @@ function setTrnEdit() {
 
     .walletName
       font-size 16px
+
+  &__labels
+    display flex
+    flex-wrap wrap
+    align-items center
+    gap $m4
+    padding-bottom $m8
+
+    .label
+      font-size 12px
+      padding 4px 8px
+      border-radius 8px
+      text-align center
+      color var(--c-font-2)
+
+    .enriched
+      background rgb(251, 192, 45)
+
+    .imported
+      background rgb(38, 166, 154)
 </style>

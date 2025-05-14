@@ -7,6 +7,7 @@ import azure_api from '~/services/azure/api';
 import { TrnType } from '~/components/trns/types';
 import { formatInput } from '~/components/trnForm/utils/calculate'
 import useAmount from '~/components/amount/useAmount'
+import { addLabel } from '~/components/trnForm/utils/label'
 
 const props = defineProps<{
   amountRaw: string
@@ -16,7 +17,7 @@ const emit = defineEmits<{
   (e: 'onChange', value: string): string
 }>()
 
-const { $store } = useNuxtApp()
+const { $store, $notify } = useNuxtApp()
 const $trnForm = useTrnFormStore()
 
 const { baseCurrencyCode, getAmountInBaseRate } = useAmount()
@@ -73,7 +74,7 @@ function adhocUploadReceipt() {
     const reader = new FileReader()
     reader.onload = (e) => {
       // FIXME: Should probably move this to server
-      const prompt = "Extract information from the receipt provided."
+      const prompt = `Extract information from the receipt provided. Today's date is ${new Date().toISOString().split('T')[0]}.`
       const schema = {
         type: "object",
         properties: {
@@ -127,12 +128,23 @@ function adhocUploadReceipt() {
         $trnForm.values.trnType = TrnType.Expense
         vue.set($trnForm.values.amount, 0, amount)
         vue.set($trnForm.values.amountRaw, 0, formatInput(amount))
-        $trnForm.values.date = Date.parse(res.date)
+        const parsedDate = Date.parse(res.date)
+        // Check if the date is valid and within the last 90 days
+        if (isNaN(parsedDate) || parsedDate - Date.now() > 0 || Date.now() - parsedDate > 1000 * 60 * 60 * 24 * 90) {
+          throw new Error("Invalid date: " + res.date)
+        }
+        $trnForm.values.date = parsedDate
         if (res.description && !$trnForm.values.desc) $trnForm.values.desc = res.description
         // TODO: Implement
         // $trnForm.values.categoryId = res.categoryId
-      }).catch((_) => {
-        // ...
+        // For now, only add the label when we haven't seen the result before
+        // addLabel($trnForm.values, "enriched")
+      }).catch((e: Error) => {
+        $notify({
+          title: 'Enrichment failed',
+          text: e.message,
+          type: 'error',
+        })
       }).finally(() => {
         $store.commit('trnForm/closeTrnFormModal', 'extraction')
       })

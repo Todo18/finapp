@@ -23,7 +23,7 @@ interface Trn {
     categoryId: string
     currency: string
     date: Date
-    description: string
+    desc: string
     edited: Date
     type: number
 }
