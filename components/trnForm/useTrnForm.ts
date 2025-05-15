@@ -18,7 +18,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     trnId: null,
     amount: [0, 0, 0],
     amountRaw: ['', '', ''],
-    date: dayjs().valueOf(),
+    date: dayjs().startOf('date').valueOf(), // NAD: erase time part
     desc: undefined,
     transferType: 0,
     trnType: 0,
@@ -106,7 +106,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     values.trnId = null
     // values.trnType = 0
 
-    // values.date = dayjs().valueOf()
+    // values.date = dayjs().startOf('date').valueOf()
     // values.walletId = null
     // values.categoryId = null
     // values.incomeWalletId = null

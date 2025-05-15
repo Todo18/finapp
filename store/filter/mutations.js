@@ -2,11 +2,11 @@ import dayjs from 'dayjs'
 
 export default {
   setDate(state, date) {
-    state.date = dayjs(date).valueOf()
+    state.date = dayjs(date).startOf('date').valueOf()
   },
 
   setFilterDateNow(state) {
-    state.date = dayjs().valueOf()
+    state.date = dayjs().startOf('date').valueOf()
   },
 
   setPeriod(state, period) {

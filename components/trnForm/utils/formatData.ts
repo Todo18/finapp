@@ -22,7 +22,7 @@ function formatTransaction(props: TrnFormValues): Transaction | false {
     categoryId: props.categoryId,
     walletId: props.walletId,
 
-    date: props.date || dayjs().valueOf(),
+    date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part
     edited: dayjs().valueOf(),
   }
 
@@ -48,7 +48,7 @@ function formatTransfer(props: TrnFormValues): Transfer | false {
     type: props.trnType,
     categoryId: 'transfer' as const,
 
-    date: props.date,
+    date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part,
     edited: dayjs().valueOf(),
 
     expenseAmount: props.amount[1],

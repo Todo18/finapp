@@ -16,9 +16,9 @@ const isToday = computed(() => {
 
 function changeDate(way: 'prev' | 'next') {
   if (way === 'prev')
-    $trnForm.values.date = $day($trnForm.values.date).subtract(1, 'day').valueOf()
+    $trnForm.values.date = $day($trnForm.values.date).subtract(1, 'day').startOf('date').valueOf()
   if (way === 'next' && !isToday.value)
-    $trnForm.values.date = $day($trnForm.values.date).add(1, 'day').valueOf()
+    $trnForm.values.date = $day($trnForm.values.date).add(1, 'day').startOf('date').valueOf()
 }
 </script>
 

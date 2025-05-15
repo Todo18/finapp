@@ -17,7 +17,7 @@ export default {
   },
 
   setDate({ commit }, date) {
-    commit('setDate', dayjs(date).valueOf())
+    commit('setDate', dayjs(date).startOf('date').valueOf())
   },
 
   setPeriodNext({ state, commit, rootState, rootGetters }) {
