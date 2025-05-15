@@ -13,12 +13,12 @@ const { $store, $day } = useNuxtApp()
 const $trnForm = useTrnFormStore()
 
 function handleSelectDate(date, close) {
-  $trnForm.values.date = $day(date).startOf('date').valueOf() // NAD: erase time part
+  $trnForm.values.date = $day(date).startOf('date').valueOf()
   close()
 }
 
 function handleSelectDateDaysAgo(daysAgo, close) {
-  $trnForm.values.date = $day().subtract(daysAgo, 'day').startOf('date').valueOf() // NAD: erase time part
+  $trnForm.values.date = $day().subtract(daysAgo, 'day').startOf('date').valueOf()
   close()
 }
 
