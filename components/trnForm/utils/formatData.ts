@@ -48,7 +48,7 @@ function formatTransfer(props: TrnFormValues): Transfer | false {
     type: props.trnType,
     categoryId: 'transfer' as const,
 
-    date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part,
+    date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part
     edited: dayjs().valueOf(),
 
     expenseAmount: props.amount[1],
