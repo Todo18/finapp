@@ -72,7 +72,7 @@ yarn
 
 - Go to the Project Overview and find `Get started by adding Firebase to your app` click to `web`.
 - Register an app and you will get your config.
-- You need to replace config in app's directory `services/firebase/config.js` with your config.
+- Copy `services/firebase/config.example.js` to `services/firebase/config.js` and paste your Firebase web config into the new file. The `config.js` file is ignored by Git so your credentials stay local.
 
 ``` bash
 apiKey: 'YOUR_CONFIG',
