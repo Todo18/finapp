@@ -9,19 +9,19 @@ export const db = getDatabase(app)
 export const storage = getStorage(app)
 export const auth = getAuth(app)
 
-export function getDataOnce(path) {
-  return new Promise((resolve) => {
-    get(child(ref(db), path))
-      .then((snapshot) => {
-        if (snapshot)
-          return resolve(snapshot.val())
-        resolve(false)
-      })
-      .catch((error) => {
-        console.log(error.message)
-        resolve()
-      })
-  })
+export async function getDataOnce(path) {
+  try {
+    const snapshot = await get(child(ref(db), path))
+
+    if (!snapshot?.exists())
+      return false
+
+    return snapshot.val()
+  }
+  catch (error) {
+    console.error(error?.message ?? error)
+    throw error
+  }
 }
 
 export function getDataAndWatch(path, callback) {
