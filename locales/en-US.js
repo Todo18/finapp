@@ -264,6 +264,7 @@ export default {
     periods: 'Summary',
     balanceTitle: 'Balance',
     emptyDesc: 'Change filter, period or add new transactions.',
+    downloadCSV: 'Download transactions as CSV',
     customize: {
       showHistory: 'Show history',
       showRoundCats: 'Show round categories list',

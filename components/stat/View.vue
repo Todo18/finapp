@@ -5,6 +5,7 @@ import useStatChart from '~/components/stat/useStatChart'
 import useStatPage from '~/components/stat/useStatPage'
 import useUIView from '~/components/layout/useUIView'
 import useWallets from '~/components/wallets/useWallets'
+import { exportTransactionsToCSV } from '~/utils/exportTransactionsToCSV'
 
 const { $store } = useNuxtApp()
 const { walletsCurrencies } = useWallets()
@@ -54,6 +55,31 @@ onDeactivated(async () => {
   await nextTick()
   chartKeyDirtyFix.value = 'show'
 })
+
+function handleDownloadCSV() {
+  const trnsItems = $store.state.trns.items
+  const walletsItems = $store.state.wallets.items
+  const categoriesItems = $store.state.categories.items
+  
+  // Determine which transactions to export based on active tab
+  let trnsIds
+  if (statPage.activeTab === 'trns') {
+    trnsIds = statPage.current.trnsIds
+  } else if (statPage.activeTab === 'income') {
+    trnsIds = combinedTrnsIds.value.income
+  } else if (statPage.activeTab === 'expense') {
+    trnsIds = combinedTrnsIds.value.expense
+  } else {
+    trnsIds = combinedTrnsIds.value.all
+  }
+  
+  exportTransactionsToCSV({
+    trnsIds,
+    trnsItems,
+    walletsItems,
+    categoriesItems,
+  })
+}
 </script>
 
 <template lang="pug">
@@ -64,11 +90,18 @@ onDeactivated(async () => {
     StatDate.grow
 
     template(v-if="isMobileView")
-      .cursor-pointer.py-2.px-4.text-xs.text-item-base-down.rounded-md.hocus_bg-item-main-hover(
-        v-if="walletsCurrencies.length > 1"
-        @click="$store.commit('currencies/showBaseCurrenciesModal')"
-      )
-        | {{ $store.state.currencies.base }}
+      .flex.items-center.gap-2
+        .cursor-pointer.py-2.px-3.text-xs.text-item-base-down.rounded-md.hocus_bg-item-main-hover(
+          :title="$t('stat.downloadCSV')"
+          @click="handleDownloadCSV"
+        )
+          .mdi.mdi-download
+
+        .cursor-pointer.py-2.px-4.text-xs.text-item-base-down.rounded-md.hocus_bg-item-main-hover(
+          v-if="walletsCurrencies.length > 1"
+          @click="$store.commit('currencies/showBaseCurrenciesModal')"
+        )
+          | {{ $store.state.currencies.base }}
 
   template(v-if="!isMobileView")
     .pb-6.px-2(v-if="walletsCurrencies.length > 1")
@@ -105,7 +138,13 @@ onDeactivated(async () => {
       StatSumTotal(class="!m-0")
       StatSumGroup(class="!m-0" typeText="expense")
       StatSumGroup(class="!m-0" typeText="income")
-    StatViewConfig
+    .flex.items-center.gap-3
+      .cursor-pointer.py-2.px-3.text-xs.text-item-base-down.rounded-md.hocus_bg-item-main-hover(
+        :title="$t('stat.downloadCSV')"
+        @click="handleDownloadCSV"
+      )
+        .mdi.mdi-download.text-lg
+      StatViewConfig
 
   StatMenu
 
