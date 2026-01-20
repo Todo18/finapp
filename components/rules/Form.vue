@@ -6,12 +6,37 @@ import type { CategoryId, CategoryItem } from '~/components/categories/types'
 import { getPreparedFormData } from '~/components/rules/getForm'
 import { saveData } from '~/services/firebase/api'
 import { create, all } from 'mathjs'
+import dayjs from 'dayjs'
 
 // TODO: Merge code input in Autocomplete.vue, so we have a CodeInput component, instead of an Autocomplete component
 // See validate, but also :values (move context into component !)
 const mathjsConfig = { }
 const mathjs = create(all, mathjsConfig)
 const mathjsDebug = false
+
+// FIXME: Move to a separate file, shared between frontend and daemon worker
+const mathjsExtensions = {
+    isEmpty: function (v: any) {
+        return !v;
+    },
+    isEqual: function (v: any, w: any) {
+        return v === w;
+    },
+    startsWith: function (haystack: string, needle: string) {
+        return haystack.slice(0, needle.length) === needle;
+    },
+    endsWith: function (haystack: string, needle: string) {
+        return haystack.slice(haystack.length - needle.length, haystack.length) === needle;
+    },
+    contains: function (haystack: string, needle: string) {
+        return haystack.includes(needle);
+    },
+    getDate: function (v: any) {
+        return dayjs(v).date();
+    },
+};
+
+mathjs.import(mathjsExtensions);
 
 const props = defineProps<{
   ruleId?: RuleID
@@ -77,6 +102,17 @@ function validate({ values, rulesItems }) {
 
     // Only one (expression) statement allowed!
     if (root.type === 'BlockNode') throw new SyntaxError()
+
+    // Evaluate to catch more errors
+    mathjs.evaluate(values.condition, {
+      accountNumber: "ACCOUNT_NUMBER",
+      currency: "ANY",
+      date: dayjs().valueOf(),
+      amount: 42,
+      accountNumberCounterparty: "ACCOUNT_NUMBER_COUNTERPARTY",
+      desc: "DESC",
+      description: "DESCRIPTION",
+    })
   }
   catch(ex) {
     $notify({
