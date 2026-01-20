@@ -15,6 +15,7 @@ function formatTransaction(props: TrnFormValues): Transaction | false {
     return false
   }
 
+  const now = dayjs().valueOf()
   const data: Transaction = {
     amount: props.amount[0],
     type: props.trnType,
@@ -23,7 +24,8 @@ function formatTransaction(props: TrnFormValues): Transaction | false {
     walletId: props.walletId,
 
     date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part
-    edited: dayjs().valueOf(),
+    created: now,
+    edited: now,
   }
 
   if (props.desc)
@@ -44,12 +46,14 @@ function formatTransfer(props: TrnFormValues): Transfer | false {
     return false
   }
 
+  const now = dayjs().valueOf()
   const data: Transfer = {
     type: props.trnType,
     categoryId: 'transfer' as const,
 
     date: props.date || dayjs().startOf('date').valueOf(), // NAD: erase time part
-    edited: dayjs().valueOf(),
+    created: now,
+    edited: now,
 
     expenseAmount: props.amount[1],
     expenseWalletId: props.expenseWalletId,

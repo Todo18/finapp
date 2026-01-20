@@ -91,6 +91,10 @@ const actions = {
             :title="label === 'rule' ? trnItem.ruleName : undefined"
           ) {{ $t(`labels.${label}`) }}
 
+          .text-xs.label.edited(
+            v-if="trnItem.created && trnItem.created !== trnItem.edited"
+          ) {{ $t(`labels.edited`) }}
+
         //- Group
         .text-xs.leading-none(v-if="trnItem.groups") In group
 
@@ -165,4 +169,7 @@ const actions = {
 
   .rule
     background rgb(171, 71, 188)
+
+  .edited
+    background rgb(100, 181, 246)
 </style>

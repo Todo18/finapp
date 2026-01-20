@@ -80,7 +80,11 @@ function setTrnEdit() {
       .label(
         v-for="label in trn.labels"
         :class="label"
+        :title="label === 'rule' ? trn.ruleName : undefined"
       ) {{ $t(`labels.${label}`) }}
+      .label.edited(
+        v-if="trn.created && trn.created !== trn.edited"
+      ) {{ $t(`labels.edited`) }}
     .flex.gap-5.items-center
       //- Expense
       div
@@ -147,7 +151,11 @@ function setTrnEdit() {
       .label(
         v-for="label in trn.labels"
         :class="label"
+        :title="label === 'rule' ? trn.ruleName : undefined"
       ) {{ $t(`labels.${label}`) }}
+      .label.edited(
+        v-if="trn.created && trn.created !== trn.edited"
+      ) {{ $t(`labels.edited`) }}
     .trnItem__amount.text-4xl(
       @click.stop="setTrnEdit"
     )
@@ -236,4 +244,7 @@ function setTrnEdit() {
 
     .rule
       background rgb(171, 71, 188)
+
+    .edited
+      background rgb(100, 181, 246)
 </style>

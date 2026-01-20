@@ -31,6 +31,7 @@ export enum TrnTypeSlug {
 interface BaseTrn {
   date: number
   desc?: string
+  created: number
   edited: number
   labels?: string[]
   ruleName?: string // for auto-imported transactions

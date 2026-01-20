@@ -61,6 +61,7 @@ interface Trn {
     currency: string
     date: Date
     desc: string
+    created: Date
     edited: Date
     type: number
 }

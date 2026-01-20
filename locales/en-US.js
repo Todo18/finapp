@@ -375,5 +375,6 @@ export default {
     "enriched": "Enriched",
     "imported": "Imported",
     "rule"  : "Rule",
+    "edited": "Edited",
   }
 }

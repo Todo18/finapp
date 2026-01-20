@@ -28,9 +28,11 @@ export default {
   }) {
     const uid = rootState.user.user.uid
     const trns = rootState.trns.items
+    const now = dayjs().valueOf()
     const valuesWithEditDate = {
       ...values,
-      edited: dayjs().valueOf(),
+      created: trns[id]?.created ?? trns[id]?.edited ?? now, // preserve created date if updating, fall back to edited date (if created date missing)
+      edited: now,
     }
 
     let isTrnSavedOnline = false
