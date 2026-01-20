@@ -121,9 +121,9 @@ function setTrnEdit() {
             colorize="income"
           )
 
-    .trnItem__desc.whitespace-pre.font-roboto.leading-none(
+    .trnItem__desc.leading-none(
       v-if="trn.desc || trn.description"
-      class="!dark_text-white/80 !text-xs"
+      _class="!dark_text-white/80 !text-xs"
     ) {{ trn.desc || trn.description }}
 
   //- Transaction
@@ -167,7 +167,9 @@ function setTrnEdit() {
         align="center"
       )
 
-    .trnItem__desc(v-if="trn.desc || trn.description") {{ trn.desc || trn.description }}
+    .trnItem__desc(
+      v-if="trn.desc || trn.description"
+    ) {{ trn.desc || trn.description }}
 </template>
 
 <style lang="stylus" scoped>
@@ -201,11 +203,13 @@ function setTrnEdit() {
   &__date
     padding-bottom $m6
     font-size 14px
+    user-select text
 
   &__desc
     color var(--c-font-2)
     font-size 14px
     padding-top $m7
+    user-select text
 
   &__wallet
     display flex
@@ -218,6 +222,7 @@ function setTrnEdit() {
     .walletName
       font-size 14px
       white-space nowrap
+      user-select text
 
     .walletName
       font-size 16px
