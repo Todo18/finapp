@@ -153,8 +153,9 @@ export default defineNuxtConfig({
   },
 
   serverMiddleware: [
-    { path: '/api/coda', handler: '~/api/coda/index.js' },
-    { path: '/api/responses', handler: '~/api/responses/index.js' },
+    // NOTE: Replaced by Firebase Functions
+    // { path: '/api/coda', handler: '~/api/coda/index.js' },
+    // { path: '/api/responses', handler: '~/api/responses/index.js' },
   ],
 
   build: {

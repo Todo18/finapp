@@ -2,12 +2,14 @@ import { initializeApp } from 'firebase/app'
 import { getAuth } from 'firebase/auth'
 import { child, get, getDatabase, off, onValue, ref, remove, set, update } from 'firebase/database'
 import { getDownloadURL, getBlob, deleteObject, getStorage, ref as storageRef, uploadBytes } from "firebase/storage";
+import { getFunctions, httpsCallableFromURL } from 'firebase/functions';
 import { config } from '~/services/firebase/config'
 
 export const app = initializeApp(config)
 export const db = getDatabase(app)
 export const storage = getStorage(app)
 export const auth = getAuth(app)
+export const functions = getFunctions(app, config.functionsRegion)
 
 export function getDataOnce(path) {
   return new Promise((resolve) => {
@@ -46,3 +48,5 @@ export const removeObject = async (uri) => await deleteObject(storageRef(storage
 export const getObject = async (uri) => await getBlob(storageRef(storage, uri))
 
 export const getObjectURI = async (uri) => await getDownloadURL(storageRef(storage, uri))
+
+export const getFunction = (url) => httpsCallableFromURL(functions, `${config.functionsUrl}/${url}`)

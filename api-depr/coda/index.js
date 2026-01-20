@@ -1,6 +1,9 @@
 //
 // I JUST REALIZED THAT THIS CAN ALL HAPPEN CLIENT SIDE, WITH AN ACTIVE, AUTHENTICATED FIREBASE CONNECTION
 // So move this from server-side API to client-side "service" ?
+// OR,
+// YOU KNOW WHAT WOULD BE EVEN BETTER?
+// A FIREBASE FUNCTION -> See functions/src/index.ts for existing endpoints
 //
 import { processFile, loadSettings, stop } from '../../../finapp-coda/worker.mjs'
 import { db } from '~/services/firebase/api'

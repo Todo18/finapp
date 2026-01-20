@@ -1,0 +1,3 @@
+See firebase.json: Hosting -> Function rewrite rules on how to properly solve this using the Firebase (Client) SDK. Calling /api/xyz will route to the deployed Function "api"
+
+UPDATE: Okay, so that didn't work TOO well, so now we just store the Functions URL in an environment variable...

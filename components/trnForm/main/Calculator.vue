@@ -74,7 +74,7 @@ function adhocUploadReceipt() {
     const reader = new FileReader()
     reader.onload = (e) => {
       // FIXME: Should probably move this to server
-      const prompt = `Extract information from the receipt provided. Today's date is ${new Date().toISOString().split('T')[0]}.`
+      const prompt = `Extract information from the receipt provided. Today's date is ${new Date().toISOString().split('T')[0]}. Returns all dates in ISO 8601 format (YYYY-MM-DD)`
       const schema = {
         type: "object",
         properties: {
@@ -92,10 +92,10 @@ function adhocUploadReceipt() {
           },
           description: {
             description: "A short description of the receipt",
-            type: "string"
+            type: ["string", "null"]
           },
         },
-        // required: ["amount", "currency", "date"],
+        required: ["amount", "currency", "date", "description"],
         additionalProperties: false
       }
       const auth = {
@@ -106,15 +106,24 @@ function adhocUploadReceipt() {
       //   filename: file.name,
       //   file_data: e.target?.result,
       // }
-      const image = {
-        type: 'image_url',
-        image_url: {
-          url: e.target?.result,
+      const content = [
+        {
+          type: 'input_text',
+          text: prompt
+        }, {
+          detail: 'auto',
+          type: 'input_image',
+          image_url: e.target?.result,
         }
-      }
-      azure_api.getResponse(prompt, [image], schema, auth).then((res: any) => {
+      ]
+      azure_api.getResponse(content, schema, auth).then((res: any) => {
         if (!res.amount || !res.currency || !res.date) {
           throw new Error("Invalid response, or not sufficient information")
+        }
+        const parsedDate = Date.parse(res.date)
+        // Check if the date is valid and within the last 90 days
+        if (isNaN(parsedDate) || parsedDate - Date.now() > 0 || Date.now() - parsedDate > 1000 * 60 * 60 * 24 * 90) {
+          throw new Error("Invalid date: " + res.date)
         }
         let amount = res.amount
         if (res.currency !== baseCurrencyCode.value) {
@@ -128,11 +137,6 @@ function adhocUploadReceipt() {
         $trnForm.values.trnType = TrnType.Expense
         vue.set($trnForm.values.amount, 0, amount)
         vue.set($trnForm.values.amountRaw, 0, formatInput(amount))
-        const parsedDate = Date.parse(res.date)
-        // Check if the date is valid and within the last 90 days
-        if (isNaN(parsedDate) || parsedDate - Date.now() > 0 || Date.now() - parsedDate > 1000 * 60 * 60 * 24 * 90) {
-          throw new Error("Invalid date: " + res.date)
-        }
         $trnForm.values.date = parsedDate
         if (res.description && !$trnForm.values.desc) $trnForm.values.desc = res.description
         // TODO: Implement

@@ -30,7 +30,7 @@
     "echarts": "^5.4.3",
     "firebase": "^10.4.0",
     "firebase-admin": "^11.5.0",
-    "firebase-functions": "^4.2.1",
+    "firebase-functions": "^7.0.3",
     "highcharts": "11.1.0",
     "highcharts-vue": "^1.4.3",
     "highlight.js": "^11.7.0",
