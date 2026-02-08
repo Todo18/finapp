@@ -241,6 +241,7 @@ export default {
     more: 'Показать еще',
     filter: {
       showTrnsWithDesc: 'Только с описанием',
+      descriptionSearchPlaceholder: 'Поиск по описанию...',
     },
     noTrns: 'Нет транзакций',
   },

@@ -29,15 +29,37 @@ const { trnFormEdit } = useTrnForm()
 
 const pageNumber = ref(1)
 const isShowTrnsWithDesc = ref(false)
+const descriptionFilter = ref('')
+
+const descriptionFilterWords = computed(() =>
+  descriptionFilter.value
+    .toLowerCase()
+    .trim()
+    .split(/\s+/)
+    .filter(Boolean))
+
+function getTrnDescription(id: TrnId) {
+  const trnItem = $store.state.trns.items[id]
+  return String(trnItem.desc || trnItem.description || '').toLowerCase()
+}
 
 const isTrnsWithDescription = computed(() =>
-  props.trnsIds.some(id => $store.state.trns.items[id].desc || $store.state.trns.items[id].description))
+  props.trnsIds.some(id => getTrnDescription(id)))
 
 const trnsIdsWithLimit = computed(() => {
-  const trnsItems = $store.state.trns.items
+  if (props.isShowFilter && isShowTrnsWithDesc.value && isTrnsWithDescription.value) {
+    return props.trnsIds.filter((id) => {
+      const description = getTrnDescription(id)
 
-  if (props.isShowFilter && isShowTrnsWithDesc.value && isTrnsWithDescription.value)
-    return props.trnsIds.filter(id => trnsItems[id].desc || trnsItems[id].description)
+      if (!description)
+        return false
+
+      if (!descriptionFilterWords.value.length)
+        return true
+
+      return descriptionFilterWords.value.every(word => description.includes(word))
+    })
+  }
 
   if (props.limit > 0)
     return props.trnsIds.slice(0, props.limit)
@@ -70,6 +92,9 @@ function showMoreTrns() {
 
 function toggleTrnsWithDesc() {
   isShowTrnsWithDesc.value = !isShowTrnsWithDesc.value
+
+  if (!isShowTrnsWithDesc.value)
+    descriptionFilter.value = ''
 }
 
 function actions(trnItem) {
@@ -109,6 +134,12 @@ div(v-if="trnsIds && trnsIds.length > 0")
       icon="mdi mdi-comment-text-outline"
       showCheckbox
       @onClick="toggleTrnsWithDesc"
+    )
+    input.mt-2.w-full.m-0.py-2.px-3.rounded-lg.text-base.font-normal.text-item-base.bg-item-main-bg.border.border-solid.border-item-main-hover.placeholder_text-item-base-down.transition.ease-in-out.focus_text-item-base-up.focus_bg-item-main-hover.focus_border-blue3.focus_outline-none(
+      v-if="isShowTrnsWithDesc"
+      v-model="descriptionFilter"
+      :placeholder="$t('trns.filter.descriptionSearchPlaceholder')"
+      type="text"
     )
 
   .grid(
