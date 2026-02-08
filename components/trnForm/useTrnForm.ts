@@ -168,9 +168,14 @@ export const useTrnFormStore = defineStore('trnForm', () => {
       values.amountRaw = values.amount.map(i => formatInput(i)) as TrnFormValues['amountRaw']
       values.trnType = props.trn.type
       values.desc = props.trn.desc || props.trn.description
-      values.date = props.trn.date
+      values.date = props.action === 'duplicate'
+        ? dayjs().startOf('date').valueOf()
+        : props.trn.date
 
-      values.labels = props.trn.labels
+      // Duplicates should be treated as fresh entries, so don't carry labels.
+      values.labels = props.action === 'duplicate'
+        ? undefined
+        : props.trn.labels
 
       values.receipt = undefined
 
