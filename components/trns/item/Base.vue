@@ -172,4 +172,7 @@ const actions = {
 
   .edited
     background rgb(100, 181, 246)
+
+  .merged
+    background rgb(255, 87, 34)
 </style>

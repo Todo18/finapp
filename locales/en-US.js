@@ -376,5 +376,6 @@ export default {
     "imported": "Imported",
     "rule"  : "Rule",
     "edited": "Edited",
+    "merged": "Merged",
   }
 }
