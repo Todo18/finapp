@@ -300,6 +300,7 @@ export default {
     more: 'Show more',
     filter: {
       showTrnsWithDesc: 'Only with description',
+      descriptionSearchPlaceholder: 'Search in description...',
     },
     noTrns: 'No transactions',
   },
