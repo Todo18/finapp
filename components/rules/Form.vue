@@ -109,9 +109,12 @@ function validate({ values, rulesItems }) {
       currency: "ANY",
       date: dayjs().valueOf(),
       amount: 42,
-      accountNumberCounterparty: "ACCOUNT_NUMBER_COUNTERPARTY",
       desc: "DESC",
       description: "DESCRIPTION",
+      accountNumberCounterparty: "ACCOUNT_NUMBER_COUNTERPARTY",
+      accountNameCounterparty: "ACCOUNT_NAME_COUNTERPARTY",
+      structuredCommunication: "STRUCTURED_COMMUNICATION",
+      freeCommunication: "FREE_COMMUNICATION",
     })
   }
   catch(ex) {
