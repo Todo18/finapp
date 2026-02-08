@@ -14,6 +14,8 @@ import { generateId } from '~/utils/generateId'
 import { getObject } from '~/services/firebase/api'
 
 export const useTrnFormStore = defineStore('trnForm', () => {
+  let receiptLoadVersion = 0
+
   const values = reactive<TrnFormValues>({
     trnId: null,
     amount: [0, 0, 0],
@@ -100,6 +102,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
    * Clear form
    */
   function onClear() {
+    receiptLoadVersion += 1
     values.amount = [0, 0, 0]
     values.amountRaw = ['', '', '']
     values.desc = undefined
@@ -139,6 +142,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
   })
 
   function setValues(props: Values) {
+    const currentReceiptLoadVersion = ++receiptLoadVersion
     values.trnId = null
 
     if (props.action === 'create') {
@@ -186,6 +190,9 @@ export const useTrnFormStore = defineStore('trnForm', () => {
         // DONE: See gcloud-storage-cors.json
         getObject(`users/${uid}/trns/${props.trnId}/${props.trn.receipt.uid}`)
           .then((blob: Blob) => {
+            if (currentReceiptLoadVersion !== receiptLoadVersion)
+              return
+
             values.receipt = blob
           })
           .catch((reason) => {
