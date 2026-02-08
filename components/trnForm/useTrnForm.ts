@@ -299,7 +299,6 @@ export function useTrnForm() {
 
   function trnFormDuplicate(trnId: TrnId) {
     const trn = $store.state.trns.items[trnId]
-    console.log('trnId', trnId)
 
     $trnForm.setValues({
       action: 'duplicate',

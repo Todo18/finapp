@@ -79,7 +79,6 @@ export default {
 
     handleDuplicateTrn() {
       const trnId = this.trnId
-      console.log('trnId', trnId)
       this.trnFormDuplicate(trnId)
       this.$store.commit('trns/hideTrnModal')
       this.$store.commit('trns/setTrnModalId', null)
@@ -175,7 +174,6 @@ Portal(
             )
 
             ModalButton(
-              v-if="false"
               :name="$t('base.duplicate')"
               icon="mdi mdi-content-copy"
               @onClick="handleDuplicateTrn"
