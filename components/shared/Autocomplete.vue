@@ -53,7 +53,7 @@ export default {
         'getDate': { type: 'Function', signature: 'getDate(value: string | number): number', parameters: ['An integer value representing the timestamp, or a string value representing a date'], description: 'Returns the day of the month for this date according to local time.' },
         // Transaction data
         'accountNumber': { type: 'StringVariable' },
-        'currency': { type: 'StringVariable' },
+        // 'currency': { type: 'StringVariable' },
         'date': { type: 'DateVariable' },
         'amount': { type: 'NumericVariable' },
         'description': { type: 'StringVariable' },

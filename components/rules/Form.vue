@@ -106,7 +106,7 @@ function validate({ values, rulesItems }) {
     // Evaluate to catch more errors
     mathjs.evaluate(values.condition, {
       accountNumber: "ACCOUNT_NUMBER",
-      currency: "ANY",
+      // currency: "ANY",
       date: dayjs().valueOf(),
       amount: 42,
       desc: "DESC",
