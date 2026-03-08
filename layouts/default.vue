@@ -3,6 +3,7 @@ import { usePointer } from '@vueuse/core'
 import debounce from '~/utils/debounce'
 import useUIView from '~/components/layout/useUIView'
 import { useTrnForm, useTrnFormStore } from '~/components/trnForm/useTrnForm'
+import type { WalletId } from '~/components/wallets/types'
 
 import '~/assets/css/index.css'
 import '~/assets/css/themes.css'
@@ -12,6 +13,22 @@ import '~/assets/css/reset.css'
 const { $store } = useNuxtApp()
 const $trnForm = useTrnFormStore()
 const { trnFormCreate } = useTrnForm()
+const route = useRoute()
+
+/**
+ * Get active wallet from route when on wallet overview page
+ */
+const activeWalletId = computed<WalletId | undefined>(() => {
+  // Check if we're on the wallet detail page
+  if (route.name === 'wallets-id' && route.params.id) {
+    return route.params.id as WalletId
+  }
+  return undefined
+})
+
+function onCreateTrn() {
+  trnFormCreate(activeWalletId.value)
+}
 
 useLazyAsyncData('', async () => {
   const { initUI } = useUIView()
@@ -81,7 +98,7 @@ div(:class="classes")
       Nuxt(keep-alive :keep-alive-props="{ include: keepAliveInclude }")
 
     .createTrn.hidden.z-10.absolute.right-6.bottom-6.lg_flex(
-      @click="trnFormCreate"
+      @click="onCreateTrn"
     )
       .btn: .mdi.mdi-plus
 

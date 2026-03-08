@@ -133,6 +133,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     walletsIds: WalletId[]
   } & ({
     action: 'create'
+    walletId?: WalletId
   } | {
     action: 'edit' | 'duplicate'
     trnId: TrnId
@@ -142,7 +143,7 @@ export const useTrnFormStore = defineStore('trnForm', () => {
     values.trnId = null
 
     if (props.action === 'create') {
-      values.walletId = props.trn?.walletId ?? props.walletsIds[0]
+      values.walletId = props.trn?.walletId ?? props.walletId ?? props.walletsIds[0]
       values.categoryId = props.trn?.categoryId ?? props.categoriesIds[0]
       values.incomeWalletId = props.walletsIds[0]
       values.expenseWalletId = props.walletsIds[1]
@@ -287,12 +288,13 @@ export function useTrnForm() {
     $trnForm.ui.isShow = true
   }
 
-  function trnFormCreate() {
+  function trnFormCreate(walletId?: WalletId) {
     $trnForm.setValues({
       action: 'create',
       categoriesIds: categoriesIds.value,
       trn: $store.getters['trns/lastCreatedTrnItem'],
       walletsIds: walletIds.value,
+      walletId,
     })
     $trnForm.ui.isShow = true
   }

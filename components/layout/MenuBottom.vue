@@ -1,13 +1,30 @@
 <script setup lang="ts">
 import useMenuData from '~/components/menu/useMenuData'
 import { useTrnForm, useTrnFormStore } from '~/components/trnForm/useTrnForm'
+import type { WalletId } from '~/components/wallets/types'
 
 const { $store } = useNuxtApp()
 const $trnForm = useTrnFormStore()
 const { trnFormCreate } = useTrnForm()
+const route = useRoute()
 
 const { onClick, checkIsActive } = useMenuData()
 const activeTab = computed(() => $store.state.ui.activeTab)
+
+/**
+ * Get active wallet from route when on wallet overview page
+ */
+const activeWalletId = computed<WalletId | undefined>(() => {
+  // Check if we're on the wallet detail page
+  if (route.name === 'wallets-id' && route.params.id) {
+    return route.params.id as WalletId
+  }
+  return undefined
+})
+
+function onCreateTrn() {
+  trnFormCreate(activeWalletId.value)
+}
 </script>
 
 <template lang="pug">
@@ -34,7 +51,7 @@ const activeTab = computed(() => $store.state.ui.activeTab)
           :class="{ 'text-blue3 dark_text-white': checkIsActive('categories'), 'group-hover_text-white': !checkIsActive('categories') }"
         )
 
-      .openTrnForm(@click="trnFormCreate")
+      .openTrnForm(@click="onCreateTrn")
         svg(
           xmlns="http://www.w3.org/2000/svg"
           viewBox="0 0 24 24"
