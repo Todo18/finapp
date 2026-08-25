@@ -51,6 +51,8 @@ export default {
         'endsWith': { type: 'Function', signature: 'endsWith(stringA: string, stringB: string): boolean', parameters: ['The first string to compare', 'The second string to compare'], description: 'Determines whether the end of the first string matches the second string.' },
         'contains': { type: 'Function', signature: 'contains(stringA: string, stringB: string): boolean', parameters: ['The string to search in', 'The string to seek'], description: 'Determines whether a specified substring occurs within a string.' },
         'getDate': { type: 'Function', signature: 'getDate(value: string | number): number', parameters: ['An integer value representing the timestamp, or a string value representing a date'], description: 'Returns the day of the month for this date according to local time.' },
+        'toUpperCase': { type: 'Function', signature: 'toUpperCase(value: string): string', parameters: ['A string value'], description: 'Returns the calling string value converted to uppercase.' },
+        'toLowerCase': { type: 'Function', signature: 'toLowerCase(value: string): string', parameters: ['A string value'], description: 'Returns the calling string value converted to lowercase.' },
         // Transaction data
         'accountNumber': { type: 'StringVariable' },
         // 'currency': { type: 'StringVariable' },

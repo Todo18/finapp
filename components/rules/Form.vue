@@ -34,6 +34,12 @@ const mathjsExtensions = {
     getDate: function (v: any) {
         return dayjs(v).date();
     },
+    toUpperCase: function (v) {
+        return v?.toUpperCase();
+    },
+    toLowerCase: function (v) {
+        return v?.toLowerCase();
+    }
 };
 
 mathjs.import(mathjsExtensions);
