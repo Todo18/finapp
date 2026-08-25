@@ -111,12 +111,15 @@ ratesUsd/
 ## CODA Daemon Integration
 
 **Separate workspace** (`finapp-coda/`):
-- Processes bank exports (CODA format, KBC/AmEx CSV)
+- Processes bank exports (CODA format, KBC/AmEx CSV) and unstructured PDF statements (BullionVault)
 - Uses Firebase Admin SDK to write directly to database
-- **Shared logic**: Math.js custom functions (e.g., `isEmpty`, `startsWith`) defined in both:
-  - Frontend: [components/rules/Form.vue](components/rules/Form.vue) (lines 16-37)
-  - Daemon: `finapp-coda/worker.mjs`
-- Keep these extensions in sync when modifying rule evaluation logic
+- **PDF track**: `worker.mjs` dispatches on file extension; `processPdfFile` calls a per-pickup extractor in `finapp-coda/extractors/` and `finapp-coda/llm.mjs`, which uses the same Azure OpenAI model as the SPA — but directly, via the `openai` SDK on the stable v1 route (`{endpoint}/openai/v1/`), not through the `/api/responses` function. Extractions are gated on a per-statement reconciliation check before anything is written.
+- If you change the Azure model or endpoint, both consumers need it: `functions/src/index.ts` (still on the older `/openai/responses?api-version=...` route) and `finapp-coda/config.mjs`
+- **Shared logic**: the rule-expression vocabulary is duplicated across both repos, so adding to it is always a **three-place change**:
+  - A custom function (e.g. `isEmpty`, `startsWith`) → `mathjsExtensions` in [components/rules/Form.vue](components/rules/Form.vue) (implementation, validates on save) + `namespace` in [components/shared/Autocomplete.vue](components/shared/Autocomplete.vue) (signature and tooltip) + `mathjsExtensions` in `finapp-coda/worker.mjs` (implementation, runs at import)
+  - A transaction field a rule may reference → the dummy scope in `Form.vue`'s `validate` + `namespace` in `Autocomplete.vue` + `RULE_SCOPE` in `finapp-coda/rules.mjs`
+- Forgetting the frontend places blocks saving or hides the addition while authoring; forgetting the daemon place lets a rule save and then throw mid-import on live data
+- See the "Rules engine" section of the root `CLAUDE.md` for the full table and the Math.js missing-symbol gotcha behind `RULE_SCOPE`
 
 ## Development Workflow
 
